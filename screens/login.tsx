@@ -3,6 +3,8 @@ import { Input } from "../components/input";
 import { Btn } from "../components/button";
 import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
+import AppRoutes from "../enums/routes.enum";
+import { useNavigation } from "@react-navigation/native";
 
 const LOGO = require('../assets/logo.png')
 
@@ -18,7 +20,9 @@ const logoStyle: ImageStyle = {
     resizeMode: "contain"
 }
 
-export function LoginScreen(): React.JSX.Element {
+export function LogInScreen(): React.JSX.Element {
+    const nav = useNavigation();
+
     return (
         <SafeAreaView style={loginStyle}>
             <Image source={LOGO} style={logoStyle}/>
@@ -36,7 +40,7 @@ export function LoginScreen(): React.JSX.Element {
             </Column>
             <Txt>
                 Don't have an account?&nbsp;
-                <Txt bold>Sign in</Txt>
+                <Txt bold onPress={() => nav.navigate(AppRoutes.signIn as never)}>Sign in</Txt>
             </Txt>
         </SafeAreaView>
     );
