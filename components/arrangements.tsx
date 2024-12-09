@@ -2,8 +2,9 @@ import React, { PropsWithChildren } from "react";
 import { FlexStyle, View, ViewStyle } from "react-native";
 
 type ArregementProps = PropsWithChildren<{
-    gap?: number;
+    gap?: number,
     maxWidth?: number,
+    style?: ViewStyle,
 }>
 
 function getProps(props: ArregementProps, direction: FlexStyle["flexDirection"] = 'column'): ViewStyle {
@@ -12,18 +13,18 @@ function getProps(props: ArregementProps, direction: FlexStyle["flexDirection"] 
         alignSelf: "stretch",
         flexDirection: direction,
         maxWidth: props.maxWidth ?? 450,
-        gap: props.gap! ?? 15
+        gap: props.gap! ?? 10
     }
 }
 
 export function Column(props: ArregementProps): React.JSX.Element {
     return (
-        <View style={getProps(props)}>{props.children}</View>
+        <View style={[getProps(props), props.style]}>{props.children}</View>
     )
 }
 
 export function Row(props: ArregementProps): React.JSX.Element {
     return (
-        <View style={getProps(props, 'row')}>{props.children}</View>
+        <View style={[getProps(props, 'row'), props.style]}>{props.children}</View>
     )
 }
