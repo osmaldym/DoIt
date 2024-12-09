@@ -1,13 +1,13 @@
 import React from 'react';
-import { LoginScreen } from './screens/login';
 import { PaperProvider } from 'react-native-paper';
 
+import { AppNav } from './navigation/rootStackNavigator';
 import { Theme } from './theme/colors';
 
 function App(): React.JSX.Element {
   return (
     <PaperProvider theme={Theme}>
-     <LoginScreen />
+      <AppNav theme={Theme}></AppNav>
     </PaperProvider>
   )
 }
