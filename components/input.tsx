@@ -8,7 +8,7 @@ const inputStyle: ViewStyle = {
 }
 
 const txtInputStyle: TextStyle = {
-    color: '#fff',
+    color: '#000',
     borderColor: 'none'
 }
 
@@ -18,6 +18,7 @@ type InputProps = PropsWithChildren<{
     style?: ViewStyle;
     inputStyle?: TextStyle,
     inputContStyle?: ViewStyle,
+    onTxtChange?: (text: string) => void;
     type?: "email" | "password"
 }>;
 
@@ -32,6 +33,7 @@ export function Input(props: InputProps): React.JSX.Element {
             contentStyle={[AppTxtStyle, txtInputStyle, props.inputStyle]}
             right={props.type! === 'password' ? eyeButton : undefined}
             style={[inputStyle, props.style]}
+            onChangeText={props.onTxtChange}
             inputMode={props.type! === 'email' ? props.type : 'none'}
             secureTextEntry={props.type! === 'password' && showPass}
             mode="outlined"
