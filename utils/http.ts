@@ -1,6 +1,10 @@
+import { AppStorage } from "../App";
+import { StorageKey } from "../enums/storage.enum";
+
 export default class HTTP {
     static headers: HeadersInit_ = {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + AppStorage.getString(StorageKey.access_token) ?? "",
     }
 
     static async get(url: string): Promise<any> {
