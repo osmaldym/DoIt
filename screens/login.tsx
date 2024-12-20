@@ -5,6 +5,12 @@ import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
 import AppRoutes from "../enums/routes.enum";
 import { useNavigation } from "@react-navigation/native";
+import { DoItApi } from "../api/DoIt";
+import Api from "../enums/api.enum";
+import { useState } from "react";
+import { LoginModel, TokenModel } from "../api/models/login";
+import { AppStorage } from "../App";
+import { StorageKey } from "../enums/storage.enum";
 
 const LOGO = require('../assets/logo.png')
 
@@ -22,6 +28,8 @@ const logoStyle: ImageStyle = {
 
 export function LogInScreen(): React.JSX.Element {
     const nav = useNavigation();
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
     return (
         <SafeAreaView style={loginStyle}>
@@ -31,12 +39,12 @@ export function LogInScreen(): React.JSX.Element {
                 <Txt>Add your data to log in.</Txt>
             </Column>
             <Column>
-                <Input type="email" />
-                <Input type="password" label="Password"/>
+                <Input type="email" onTxtChange={(txt) => setEmail(txt)} />
+                <Input type="password" label="Password" onTxtChange={(txt) => setPass(txt)}/>
             </Column>
             <Txt>Forgot your password?</Txt>
             <Column>
-                <Btn />
+                <Btn onPress={async () => await login(email, pass)} />
             </Column>
             <Txt>
                 Don't have an account?&nbsp;
@@ -44,4 +52,17 @@ export function LogInScreen(): React.JSX.Element {
             </Txt>
         </SafeAreaView>
     );
+}
+
+async function login(email: string, pass: string) {
+    const data: LoginModel = { email: email, password: pass, };
+    const res = await DoItApi.post(Api.logIn, data);
+    
+    if (res.error) {
+        console.error(res.error);
+        return;
+    }
+
+    const resData: TokenModel = res.data as TokenModel;
+    AppStorage.set(StorageKey.access_token, resData.access_token);
 }
