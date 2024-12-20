@@ -5795,6 +5795,11 @@ react-native-asset@^2.1.1:
     sha1-file "^1.0.4"
     xcode "^2.0.0"
 
+react-native-mmkv@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-3.2.0.tgz#460723eb23b9cc92c65b0416eae9874a6ddf5b82"
+  integrity sha512-9y7K//1MaU46TFrXkyU0wT5VGk9Y2FDLFV6NPl+z3jTbm2G7SC1UIxneF6CfhSmBX5CfKze9SO7kwDuRx7flpQ==
+
 react-native-paper@^5.12.5:
   version "5.12.5"
   resolved "https://registry.npmjs.org/react-native-paper/-/react-native-paper-5.12.5.tgz"
@@ -6099,6 +6104,11 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rusting-js@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/rusting-js/-/rusting-js-0.1.7.tgz#62dc7e387b7d11d40e67062cbac52d60448fa11d"
+  integrity sha512-9hO1y/iFP41x2deYnYSCLEqf+A9JFxcGB+6SzPmM9QQna6iqoSYPVheF4hW/hicEKvT+mSfKORJPW6X5sDQR6w==
 
 safe-array-concat@^1.1.2:
   version "1.1.2"
