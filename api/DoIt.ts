@@ -25,8 +25,8 @@ export class DoItApi {
         return res.unwrap();
     }
 
-    static async delete(endpoint: Api, id: string): Promise<Success & Error> {
-        const urlEndpoint: string = this.url + endpoint + id;
+    static async delete(endpoint: Api, id?: string): Promise<Success & Error> {
+        const urlEndpoint: string = this.url + endpoint + (id ?? "");
         const res = await catch_unwind(async () => (await HTTP.delete(urlEndpoint)).json());
         return res.unwrap();
     }
