@@ -25,7 +25,7 @@ type InputProps = PropsWithChildren<{
 export function Input(props: InputProps): React.JSX.Element {
     const [showPass, setShowPass] = useState(true);
 
-    const eyeButton: ReactNode = <TextInput.Icon onPress={() => setShowPass(!showPass)} icon="eye" />;
+    const eyeButton: ReactNode = <TextInput.Icon onPress={() => setShowPass(!showPass)} icon={showPass ? 'eye' : 'eye-off'} />;
 
     return (
         <TextInput
