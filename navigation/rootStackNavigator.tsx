@@ -4,7 +4,7 @@ import { LogInScreen } from "../screens/login";
 import { SignInScreen } from "../screens/signin";
 import { PropsWithRef } from "react";
 import AppRoutes from "../enums/routes.enum";
-import { AuthContext, useAuthGuard } from "../hooks/auth.guard";
+import { AuthContext, GuardData, useAuthGuard } from "../hooks/auth.guard";
 import { HomeScreen } from "../screens/home";
 import { SplashScreen } from "../screens/splash";
 
@@ -26,9 +26,9 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
             <NavigationContainer theme={props.theme}>
                 <Stack.Navigator screenOptions={opts}>
                     {
-                        guard.loading ? (
+                        (guard as GuardData).loading ? (
                             <Stack.Screen name={AppRoutes.splashScreen} component={SplashScreen} />
-                        ) : !guard.userToken ? (
+                        ) : !(guard as GuardData).userToken ? (
                             <>
                                 <Stack.Screen 
                                     name={AppRoutes.logIn}

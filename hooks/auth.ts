@@ -30,9 +30,9 @@ export async function signin(user: LoginModel) {
     return resData.access_token;
 }
 
-export async function logout() {
+export function logout() {
     AppStorage.delete(StorageKey.access_token);
-    return "";
+    return undefined;
 }
 
 export async function deleteAccount() {
