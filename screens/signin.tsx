@@ -5,9 +5,12 @@ import { Btn } from "../components/button";
 import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { AuthContext } from "../hooks/auth.guard";
 import { LoginModel } from "../api/models/login";
+import { Error } from "../api/models/responses";
+import { getErrorMsg } from "../utils";
+import { BarAlert } from "../components/barAlert";
 
 const LOGO = require('../assets/logo.png')
 
@@ -30,9 +33,16 @@ export function SignInScreen(): React.JSX.Element {
     const { signin: signin }: AuthContext = useContext(AuthContext) as AuthContext;
     const [user, setUser] = useState({} as LoginModel);
     const [passForConfirm, setPassForConfirm] = useState('');
+    const [error, dispatch] = useReducer(
+        (_state: unknown, action: unknown) => {
+            if (action == undefined) return;
+            return action as Error;
+        },
+        {} as Error
+    );
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             <Appbar.Header style={style.header}>
                 <Appbar.BackAction onPress={() => nav.goBack()} />
             </Appbar.Header>
@@ -49,12 +59,20 @@ export function SignInScreen(): React.JSX.Element {
                 </Column>
                 <Column>
                     <Btn title="Sign in" onPress={async () => {
-                        const validated: boolean = validate(user, { confirmPass: passForConfirm });
-                        if (!validated) return;
-                        await signin(user);
+                        const localError = validate(user, { confirmPass: passForConfirm });
+                        if (localError) return dispatch(localError);
+                        const data = await signin(user);
+                        console.log(data);
+                        
+                        return dispatch(await signin(user));
                     }} />
                 </Column>
             </Column>
+            <BarAlert 
+                text={error?.error ? getErrorMsg(error) : ""}
+                type="error"
+                visible={!!error?.error}
+                onDismiss={() => dispatch(undefined)}/>
         </SafeAreaView>
     );
 }
@@ -63,13 +81,7 @@ type Validations = {
     confirmPass: string,
 }
 
-function validate(user: LoginModel, validations: Validations): boolean {
-    let isAllRight: boolean = true;
-
-    if (validations.confirmPass != user.password) {
-        console.error("The passwords are different");
-        isAllRight = false;
-    }
-    
-    return isAllRight;
+function validate(user: LoginModel, validations: Validations): Error | undefined {
+    if (validations.confirmPass != user.password) return {error: "Passwords error", message: "The passwords are different"};
+    return undefined;
 }
