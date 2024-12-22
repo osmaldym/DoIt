@@ -7,10 +7,7 @@ import { StorageKey } from "../enums/storage.enum";
 export async function login(user: LoginModel) {
     const res = await DoItApi.post(Api.logIn, user);
     
-    if (res.error) {
-        console.error(res.error);
-        return undefined;
-    }
+    if (res.error) return res;
 
     const resData: TokenModel = res.data as TokenModel;
     AppStorage.set(StorageKey.access_token, resData.access_token);
@@ -20,10 +17,7 @@ export async function login(user: LoginModel) {
 export async function signin(user: LoginModel) {
     const res = await DoItApi.post(Api.signIn, user);
 
-    if (res.error) {
-        console.error(res.error);
-        return undefined;
-    }
+    if (res.error) return res;
 
     const resData: TokenModel = res.data as TokenModel;
     AppStorage.set(StorageKey.access_token, resData.access_token);
@@ -38,10 +32,7 @@ export function logout() {
 export async function deleteAccount() {
     const res = await DoItApi.delete(Api.profile);
     
-    if (res.error) {
-        console.error(res.error);
-        return undefined;
-    }
+    if (res.error) return res
 
     return logout();
 }

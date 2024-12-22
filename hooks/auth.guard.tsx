@@ -42,16 +42,22 @@ export const useAuthGuard = () => {
 
     const authContext: AuthContext = useMemo(() => ({
         login: async (user) => {
-            dispatch({ type: AuthGuardConsts.LOGIN, token: await login(user) });
+            const res = await login(user); 
+            if (typeof res != 'string') return res;
+            dispatch({ type: AuthGuardConsts.LOGIN, token: res });
         },
         signin: async (user) => {
-            dispatch({ type: AuthGuardConsts.LOGIN, token: await signin(user) });
+            const res = await signin(user); 
+            if (typeof res != 'string') return res;
+            dispatch({ type: AuthGuardConsts.LOGIN, token: res });
         },
         logout: () => {
             dispatch({ type: AuthGuardConsts.LOGOUT, token: logout() });
         },
         deleteAccount: async () => {
-            dispatch({ type: AuthGuardConsts.LOGOUT, token: await deleteAccount() });
+            const res = await deleteAccount();
+            if (typeof res != 'undefined') return res;
+            dispatch({ type: AuthGuardConsts.LOGOUT, token: res });
         },
     }), [])
 
@@ -59,10 +65,10 @@ export const useAuthGuard = () => {
 }
 
 export type AuthContext = {
-    login: (user: LoginModel) => Promise<void>,
-    signin: (user: LoginModel) => Promise<void>,
+    login: (user: LoginModel) => Promise<unknown>,
+    signin: (user: LoginModel) => Promise<unknown>,
     logout: () => void,
-    deleteAccount: () => Promise<void>,
+    deleteAccount: () => Promise<unknown>,
 }
 
 export type GuardData = {
