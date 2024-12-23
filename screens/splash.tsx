@@ -1,10 +1,17 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Txt } from "../components/text";
+import { Image, ImageStyle } from "react-native";
+
+const LOGO = require('../assets/logo.png')
+
+const logoStyle: ImageStyle = {
+    height: 100,
+    resizeMode: "contain"
+}
 
 export function SplashScreen(): React.JSX.Element {
     return (
-        <SafeAreaView>
-            <Txt>Hello world from splash screen!</Txt>
+        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Image source={LOGO} style={logoStyle}/>
         </SafeAreaView>
     )
 } 
