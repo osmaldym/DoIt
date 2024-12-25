@@ -5,12 +5,12 @@ import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
 import AppRoutes from "../enums/routes.enum";
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useReducer, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../hooks/auth.guard";
 import { LoginModel } from "../api/models/login";
-import { Error } from "../api/models/responses";
 import { BarAlert } from "../components/barAlert";
 import { getErrorMsg } from "../utils";
+import { useErrorReducer } from "../reducers/calls";
 
 const LOGO = require('../assets/logo.png')
 
@@ -30,13 +30,7 @@ export function LogInScreen(): React.JSX.Element {
     const nav = useNavigation();
     const { login: login } = useContext(AuthContext); 
     const [user, setUser] = useState({} as LoginModel);
-    const [error, dispatch] = useReducer(
-        (_state: unknown, action: unknown) => {
-            if (action == undefined) return;
-            return action as Error;
-        },
-        {} as Error
-    );
+    const [error, setErrorIfExist] = useErrorReducer();
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -51,7 +45,7 @@ export function LogInScreen(): React.JSX.Element {
                     <Input type="password" label="Password" onTxtChange={(txt) => user.password = txt}/>
                 </Column>
                 <Column>
-                    <Btn onPress={async () => dispatch(await login(user))} />
+                    <Btn onPress={async () => setErrorIfExist(await login(user))} />
                 </Column>
                 <Txt>
                     Don't have an account?&nbsp;
@@ -62,7 +56,7 @@ export function LogInScreen(): React.JSX.Element {
                 text={error?.error ? getErrorMsg(error) : ""}
                 type="error"
                 visible={!!error?.error}
-                onDismiss={() => dispatch(undefined)}/>
+                onDismiss={() => setErrorIfExist(undefined)}/>
         </SafeAreaView>
     );
 }

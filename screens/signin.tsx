@@ -9,6 +9,7 @@ import { LoginModel } from "../api/models/login";
 import { Error } from "../api/models/responses";
 import { getErrorMsg } from "../utils";
 import { BarAlert } from "../components/barAlert";
+import { useErrorReducer } from "../reducers/calls";
 
 const LOGO = require('../assets/logo.png')
 
@@ -27,13 +28,7 @@ export function SignInScreen(): React.JSX.Element {
     const { signin } = useContext(AuthContext);
     const [user, setUser] = useState({} as LoginModel);
     const [passForConfirm, setPassForConfirm] = useState('');
-    const [error, dispatch] = useReducer(
-        (_state: unknown, action: unknown) => {
-            if (action == undefined) return;
-            return action as Error;
-        },
-        {} as Error
-    );
+    const [error, setErrorIfExist] = useErrorReducer()
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -51,11 +46,11 @@ export function SignInScreen(): React.JSX.Element {
                 <Column>
                     <Btn title="Sign in" onPress={async () => {
                         const localError = validate(user, { confirmPass: passForConfirm });
-                        if (localError) return dispatch(localError);
+                        if (localError) return setErrorIfExist(localError);
                         const data = await signin(user);
                         console.log(data);
                         
-                        return dispatch(await signin(user));
+                        return setErrorIfExist(await signin(user));
                     }} />
                 </Column>
             </Column>
@@ -63,7 +58,7 @@ export function SignInScreen(): React.JSX.Element {
                 text={error?.error ? getErrorMsg(error) : ""}
                 type="error"
                 visible={!!error?.error}
-                onDismiss={() => dispatch(undefined)}/>
+                onDismiss={() => setErrorIfExist(undefined)}/>
         </SafeAreaView>
     );
 }
