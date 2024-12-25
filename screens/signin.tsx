@@ -1,10 +1,8 @@
 import { Image, SafeAreaView, StyleSheet } from "react-native";
-import { Appbar } from "react-native-paper";
 import { Input } from "../components/input";
 import { Btn } from "../components/button";
 import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
-import { useNavigation } from "@react-navigation/native";
 import { useContext, useReducer, useState } from "react";
 import { AuthContext } from "../hooks/auth.guard";
 import { LoginModel } from "../api/models/login";
@@ -15,9 +13,6 @@ import { BarAlert } from "../components/barAlert";
 const LOGO = require('../assets/logo.png')
 
 const style = StyleSheet.create({
-    header: {
-        backgroundColor: 'transparent'
-    },
     gen: {
         padding: 25,
         alignItems: "center",
@@ -29,7 +24,6 @@ const style = StyleSheet.create({
 })
 
 export function SignInScreen(): React.JSX.Element {
-    const nav = useNavigation();
     const { signin: signin }: AuthContext = useContext(AuthContext) as AuthContext;
     const [user, setUser] = useState({} as LoginModel);
     const [passForConfirm, setPassForConfirm] = useState('');
@@ -43,9 +37,6 @@ export function SignInScreen(): React.JSX.Element {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <Appbar.Header style={style.header}>
-                <Appbar.BackAction onPress={() => nav.goBack()} />
-            </Appbar.Header>
             <Column style={style.gen} gap={15}>
                 <Image source={LOGO} style={style.logo}/>
                 <Column>
