@@ -33,10 +33,12 @@ const allItems: Array<MenuItem> = [
     {
         label: "Tags",
         icon: "tag-outline",
+        route: AppRoutes.tags
     },
     {
         label: "Profile",
         icon: "account-circle-outline",
+        route: AppRoutes.profile
     },
     {
         label: 'Logout',
