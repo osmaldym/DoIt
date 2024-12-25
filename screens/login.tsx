@@ -28,7 +28,7 @@ const logoStyle: ImageStyle = {
 
 export function LogInScreen(): React.JSX.Element {
     const nav = useNavigation();
-    const { login: login }: AuthContext = useContext(AuthContext) as AuthContext; 
+    const { login: login } = useContext(AuthContext); 
     const [user, setUser] = useState({} as LoginModel);
     const [error, dispatch] = useReducer(
         (_state: unknown, action: unknown) => {

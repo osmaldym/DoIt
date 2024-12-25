@@ -24,7 +24,7 @@ const style = StyleSheet.create({
 })
 
 export function SignInScreen(): React.JSX.Element {
-    const { signin: signin }: AuthContext = useContext(AuthContext) as AuthContext;
+    const { signin } = useContext(AuthContext);
     const [user, setUser] = useState({} as LoginModel);
     const [passForConfirm, setPassForConfirm] = useState('');
     const [error, dispatch] = useReducer(

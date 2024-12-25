@@ -26,7 +26,7 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
     const [guard, authContext] = useAuthGuard();
 
     return (
-        <AuthContext.Provider value={authContext}>
+        <AuthContext.Provider value={authContext as AuthContext}>
             <NavigationContainer theme={props.theme}>
                 <MenuContext.Provider value={useRef<DrawerLayoutAndroid>(null)}>
                     <Menu>

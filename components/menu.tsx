@@ -90,7 +90,7 @@ export function Menu(props: PropsWithChildren<{}>): React.JSX.Element {
     const [guard] = useAuthGuard();
 
     const drawerContext = useContext(MenuContext);
-    const { logout } = useContext(AuthContext) as AuthContext;
+    const { logout } = useContext(AuthContext);
     const nav = useNavigation();
     
     // Edit here the item childs of menu if you want to use dynamic variables/functions.

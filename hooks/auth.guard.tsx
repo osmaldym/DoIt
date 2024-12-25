@@ -5,7 +5,7 @@ import { StorageKey } from "../enums/storage.enum";
 import { AuthGuard as AuthGuardConsts } from "../enums/guard.enum";
 import { deleteAccount, login, logout, signin } from "./auth";
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext({} as AuthContext);
 
 export const useAuthGuard = () => {
     const defData: GuardData = { userToken: null, loading: false, logout: false };
