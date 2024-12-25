@@ -10,6 +10,8 @@ import { SplashScreen } from "../screens/splash";
 import { Menu, MenuContext } from "../components/menu";
 import { DrawerLayoutAndroid } from "react-native";
 import { Header } from "../components/header";
+import { ProfileScreen } from "../screens/profile";
+import { TagScreen } from "../screens/tags";
 
 const Stack = createNativeStackNavigator();
 
@@ -55,11 +57,30 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                                             />
                                     </>
                                 ) : (
-                                    <Stack.Screen 
-                                        name={AppRoutes.home}
-                                        component={HomeScreen}
-                                        options={{ header: (props) => <Header nativeStackProps={props} /> }}
-                                        />
+                                    <>
+                                        <Stack.Screen 
+                                            name={AppRoutes.home}
+                                            component={HomeScreen}
+                                            options={{ header: (props) => <Header nativeStackProps={props} strictMenu={true} /> }}
+                                            />
+                                        <Stack.Screen 
+                                            name={AppRoutes.profile}
+                                            component={ProfileScreen}
+                                            options={{ 
+                                                title: 'Profile',
+                                                header: (props) => <Header nativeStackProps={props} strictMenu={true} />
+                                            }}
+                                            />
+                                        <Stack.Screen 
+                                            name={AppRoutes.tags}
+                                            component={TagScreen}
+                                            options={{ 
+                                                title: 'Tags',
+                                                headerTitle: 'Tags',
+                                                header: (props) => <Header nativeStackProps={props} strictMenu={true} />
+                                            }}
+                                            />
+                                    </>
                                 )
                             }
                         </Stack.Navigator>
