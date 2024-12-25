@@ -46,11 +46,7 @@ export function SignInScreen(): React.JSX.Element {
                 <Column>
                     <Btn title="Sign in" onPress={async () => {
                         const localError = validate(user, { confirmPass: passForConfirm });
-                        if (localError) return setErrorIfExist(localError);
-                        const data = await signin(user);
-                        console.log(data);
-                        
-                        return setErrorIfExist(await signin(user));
+                        return setErrorIfExist(localError ?? await signin(user));
                     }} />
                 </Column>
             </Column>
