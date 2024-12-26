@@ -28,9 +28,16 @@ const logoStyle: ImageStyle = {
 
 export function LogInScreen(): React.JSX.Element {
     const nav = useNavigation();
-    const { login: login } = useContext(AuthContext); 
-    const [user, setUser] = useState({} as LoginModel);
+    const { login } = useContext(AuthContext); 
+    const [user] = useState({} as LoginModel);
+    const [loading, setLoading] = useState(false);
     const [error, setErrorIfExist] = useErrorReducer();
+
+    const runLogin = async () => {
+        setLoading(true)
+        setErrorIfExist(await login(user))
+        setLoading(false)
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -45,7 +52,7 @@ export function LogInScreen(): React.JSX.Element {
                     <Input type="password" label="Password" onTxtChange={(txt) => user.password = txt}/>
                 </Column>
                 <Column>
-                    <Btn onPress={async () => setErrorIfExist(await login(user))} />
+                    <Btn loading={loading} onPress={runLogin} />
                 </Column>
                 <Txt>
                     Don't have an account?&nbsp;

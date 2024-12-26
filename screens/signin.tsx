@@ -26,9 +26,17 @@ const style = StyleSheet.create({
 
 export function SignInScreen(): React.JSX.Element {
     const { signin } = useContext(AuthContext);
-    const [user, setUser] = useState({} as LoginModel);
+    const [user] = useState({} as LoginModel);
+    const [loading, setLoading] = useState(false);
     const [passForConfirm, setPassForConfirm] = useState('');
-    const [error, setErrorIfExist] = useErrorReducer()
+    const [error, setErrorIfExist] = useErrorReducer();
+
+    const runSignin = async () => {
+        setLoading(true)
+        const localError = validate(user, { confirmPass: passForConfirm })
+        setErrorIfExist(localError ?? await signin(user))
+        setLoading(false)
+    }
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -44,10 +52,7 @@ export function SignInScreen(): React.JSX.Element {
                     <Input type="password" label="Confirm password" onTxtChange={(txt) => setPassForConfirm(txt)}/>
                 </Column>
                 <Column>
-                    <Btn title="Sign in" onPress={async () => {
-                        const localError = validate(user, { confirmPass: passForConfirm });
-                        return setErrorIfExist(localError ?? await signin(user));
-                    }} />
+                    <Btn loading={loading} title="Sign in" onPress={runSignin} />
                 </Column>
             </Column>
             <BarAlert 
