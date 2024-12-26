@@ -59,7 +59,7 @@ export function ProfileScreen(): React.JSX.Element {
         <SafeAreaView style={{flex: 1}}>
             <Column style={columnStyle}>
                 <Icon size={150} source="account-circle-outline"/>
-                { !userEmail ? <Skeleton /> : <Txt bold size={28}>{userEmail}</Txt> }
+                { !userEmail ? <Skeleton width={300}/> : <Txt bold size={28}>{userEmail}</Txt> }
                 <Column style={{alignItems: 'flex-start'}}>
                     <Btn loading={loading} noBg icon="logout" title="Logout" size={20} 
                         onPress={() => setShowDialog({ logout: true })} />
