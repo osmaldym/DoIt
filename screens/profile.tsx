@@ -1,4 +1,4 @@
-import { Dialog, Icon, Portal } from "react-native-paper";
+import { Icon } from "react-native-paper";
 import { Column } from "../components/arrangements";
 import { SafeAreaView, ViewStyle } from "react-native";
 import { Txt } from "../components/text";
@@ -12,6 +12,7 @@ import { BarAlert } from "../components/barAlert";
 import { getErrorMsg } from "../utils";
 import { useErrorReducer } from "../reducers/calls";
 import { ProfileModel } from "../api/models/profile";
+import { SimpleAlert } from "../components/simpleAlert";
 
 type DialogShown = {
     logout?: boolean,
@@ -67,30 +68,22 @@ export function ProfileScreen(): React.JSX.Element {
                 </Column>
             </Column>
 
-            <Portal>
-                <Dialog visible={dialogShown.logout!} onDismiss={() => setShowDialog({ logout: false })}>
-                    <Dialog.Title>Logout</Dialog.Title>
-                    <Dialog.Content>
-                        <Txt>Are you sure?</Txt>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Btn noBg title="No" onPress={() => setShowDialog({ logout: false })} />
-                        <Btn noBg title="Yes" color="red" onPress={runLogout}/>
-                    </Dialog.Actions>
-                </Dialog>
+            <SimpleAlert 
+                visible={dialogShown.logout!} 
+                onDismiss={() => setShowDialog({ logout: false })}
+                title="Logout"
+                content="Are you sure?"
+                onPressYes={runLogout}
+                />
 
-                <Dialog visible={dialogShown.deleteAccount!} onDismiss={() => setShowDialog({ deleteAccount: false })}>
-                <Dialog.Title style={{ color:'red', fontWeight:'bold' }}>Delete account</Dialog.Title>
-                    <Dialog.Content>
-                        <Txt>Are you sure for delete the account?</Txt>
-                        <Txt>This action is irreversible</Txt>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Btn noBg title="No" onPress={() => setShowDialog({ deleteAccount: false })} />
-                        <Btn noBg title="Yes" color="red" onPress={runDeleteAccount}/>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+            <SimpleAlert
+                visible={dialogShown.deleteAccount!}
+                onDismiss={() => setShowDialog({ deleteAccount: false })}
+                type="danger"
+                title="Delete account"
+                content="Are you sure for delete the account? This action is irreversible"
+                onPressYes={runDeleteAccount}
+                />
 
             <BarAlert 
                 text={error?.error ? getErrorMsg(error) : ""}
