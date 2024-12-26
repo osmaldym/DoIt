@@ -36,7 +36,7 @@ export function Skeleton(props: SkeletonProps): React.JSX.Element {
         opacity: anim,
         borderRadius: props.borderRadius ?? 25,
         backgroundColor: props.bgColor ?? "#999999",
-        width: props.width ?? 300,
+        width: props.width ?? 'auto',
         height: props.height ?? 20,
     }
 
