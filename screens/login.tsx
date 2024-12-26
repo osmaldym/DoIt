@@ -7,7 +7,7 @@ import AppRoutes from "../enums/routes.enum";
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../hooks/auth.guard";
-import { LoginModel } from "../api/models/login";
+import { UserModel } from "../api/models/user";
 import { BarAlert } from "../components/barAlert";
 import { getErrorMsg } from "../utils";
 import { useErrorReducer } from "../reducers/calls";
@@ -29,7 +29,7 @@ const logoStyle: ImageStyle = {
 export function LogInScreen(): React.JSX.Element {
     const nav = useNavigation();
     const { login } = useContext(AuthContext); 
-    const [user] = useState({} as LoginModel);
+    const [user] = useState({} as UserModel);
     const [loading, setLoading] = useState(false);
     const [error, setErrorIfExist] = useErrorReducer();
 

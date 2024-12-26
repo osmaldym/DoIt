@@ -5,7 +5,7 @@ import { Txt } from "../components/text";
 import { Column } from "../components/arrangements";
 import { useContext, useReducer, useState } from "react";
 import { AuthContext } from "../hooks/auth.guard";
-import { LoginModel } from "../api/models/login";
+import { UserModel } from "../api/models/user";
 import { Error } from "../api/models/responses";
 import { getErrorMsg } from "../utils";
 import { BarAlert } from "../components/barAlert";
@@ -26,7 +26,7 @@ const style = StyleSheet.create({
 
 export function SignInScreen(): React.JSX.Element {
     const { signin } = useContext(AuthContext);
-    const [user] = useState({} as LoginModel);
+    const [user] = useState({} as UserModel);
     const [loading, setLoading] = useState(false);
     const [passForConfirm, setPassForConfirm] = useState('');
     const [error, setErrorIfExist] = useErrorReducer();
@@ -68,7 +68,7 @@ type Validations = {
     confirmPass: string,
 }
 
-function validate(user: LoginModel, validations: Validations): Error | undefined {
+function validate(user: UserModel, validations: Validations): Error | undefined {
     if (validations.confirmPass != user.password) return {error: "Passwords error", message: "The passwords are different"};
     return undefined;
 }

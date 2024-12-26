@@ -1,10 +1,10 @@
 import { AppStorage } from "../App";
 import { DoItApi } from "../api/DoIt";
-import { LoginModel, TokenModel } from "../api/models/login";
+import { UserModel, TokenModel } from "../api/models/user";
 import Api from "../enums/api.enum";
 import { StorageKey } from "../enums/storage.enum";
 
-export async function login(user: LoginModel) {
+export async function login(user: UserModel) {
     const res = await DoItApi.post(Api.logIn, user);
     
     if (res.error) return res;
@@ -14,7 +14,7 @@ export async function login(user: LoginModel) {
     return resData.access_token;
 }
 
-export async function signin(user: LoginModel) {
+export async function signin(user: UserModel) {
     const res = await DoItApi.post(Api.signIn, user);
 
     if (res.error) return res;

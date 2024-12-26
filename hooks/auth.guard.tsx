@@ -1,5 +1,5 @@
 import { createContext, useEffect, useMemo, useReducer } from "react";
-import { LoginModel, TokenModel } from "../api/models/login";
+import { UserModel, TokenModel } from "../api/models/user";
 import { AppStorage } from "../App";
 import { StorageKey } from "../enums/storage.enum";
 import { AuthGuard as AuthGuardConsts } from "../enums/guard.enum";
@@ -65,8 +65,8 @@ export const useAuthGuard = () => {
 }
 
 export type AuthContext = {
-    login: (user: LoginModel) => Promise<unknown>,
-    signin: (user: LoginModel) => Promise<unknown>,
+    login: (user: UserModel) => Promise<unknown>,
+    signin: (user: UserModel) => Promise<unknown>,
     logout: () => void,
     deleteAccount: () => Promise<unknown>,
 }
