@@ -22,7 +22,7 @@ const dangerStyles: TextStyle = {
     color: 'red',
 }
 
-export function SimpleAlert(props: AlertProps) {
+export function SimpleAlert(props: AlertProps): React.JSX.Element {
     return (
         <Portal>
             <Dialog visible={props.visible} onDismiss={props.onDismiss}>

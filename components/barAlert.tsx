@@ -15,7 +15,7 @@ type BarAlertProps = PropsWithRef<{
 
 let snackBarStyle: ViewStyle = {}
 
-export function BarAlert(props?: BarAlertProps) {
+export function BarAlert(props?: BarAlertProps): React.JSX.Element {
     const color: string = props?.type == "error" ? '#ff5a5a':'#000000';
     
     snackBarStyle = { backgroundColor: color }

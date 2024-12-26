@@ -10,7 +10,7 @@ type SkeletonProps = PropsWithChildren<{
     style?: ViewStyle,
 }>
 
-export function Skeleton(props: SkeletonProps) {
+export function Skeleton(props: SkeletonProps): React.JSX.Element {
     const anim = useRef(new Animated.Value(0.5)).current;
 
     const startAnim = useCallback(() => {
