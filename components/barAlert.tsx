@@ -5,7 +5,7 @@ import { Row } from "./arrangements";
 import { Txt } from "./text";
 
 type BarAlertProps = PropsWithRef<{
-    type: 'info' | 'error',
+    type: 'info' | 'error' | 'success',
     text?: string,
     visible: boolean,
     onDismiss: () => void,
@@ -16,7 +16,22 @@ type BarAlertProps = PropsWithRef<{
 let snackBarStyle: ViewStyle = {}
 
 export function BarAlert(props?: BarAlertProps): React.JSX.Element {
-    const color: string = props?.type == "error" ? '#ff5a5a':'#000000';
+    let icon: string = '';
+    let color: string = '';
+
+    switch (props?.type){
+        case 'error':
+            icon = 'alert-outline';
+            color = '#ff5a5a';
+            break;
+        case 'success':
+            icon = 'check';
+            color = '#68ff5a';
+            break;
+        default:
+            icon = 'information-outline';
+            color = '#000000';
+    }
     
     snackBarStyle = { backgroundColor: color }
 
@@ -28,7 +43,7 @@ export function BarAlert(props?: BarAlertProps): React.JSX.Element {
             style={[snackBarStyle, props?.style]}
             >
             <Row style={{ alignItems: "center" }}>
-                <Icon source={props?.type == 'error' ? 'alert-outline' : 'information-outline'} size={24} />
+                <Icon source={icon} size={24} />
                 <Txt style={{ color: "#000000" }}>{props?.text ?? "Hello World!"}</Txt>
             </Row>
         </Snackbar>
