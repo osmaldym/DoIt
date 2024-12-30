@@ -7,8 +7,19 @@ import { catch_unwind } from "rusting-js";
 export class DoItApi {
     static url: string = Config.URL ?? "";
 
-    static async get(endpoint: Api, id?: string): Promise<Success & Error> {
-        const urlEndpoint: string = this.url + endpoint + (id ?? "");
+    static async get(endpoint: Api, data?: object): Promise<Success & Error>
+    static async get(endpoint: Api, idOrVal?: string): Promise<Success & Error>
+    static async get(endpoint: Api, idOrVal?: unknown): Promise<Success & Error> {
+        let urlEndpoint: string = this.url + endpoint;
+
+        if (typeof idOrVal == 'string') urlEndpoint += idOrVal
+        if (typeof idOrVal == 'object') {
+            urlEndpoint += '?'
+            for (const [key, val] of Object.entries(idOrVal as any))
+                urlEndpoint += `${key}=${val}&`;
+            urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1);   
+        }
+
         let res = await catch_unwind(async () => (await HTTP.get(urlEndpoint)).json());
         return res.unwrap();
     }
