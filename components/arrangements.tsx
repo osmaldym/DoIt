@@ -3,14 +3,15 @@ import { FlexStyle, View, ViewStyle } from "react-native";
 
 type ArregementProps = PropsWithChildren<{
     gap?: number,
-    maxWidth?: number,
+    maxWidth?: number | 'auto',
+    noStretch?: boolean,
     style?: ViewStyle,
 }>
 
 function getProps(props: ArregementProps, direction: FlexStyle["flexDirection"] = 'column'): ViewStyle {
     return {
         display: "flex",
-        alignSelf: "stretch",
+        alignSelf: !props.noStretch ? "stretch" : 'auto',
         flexDirection: direction,
         maxWidth: props.maxWidth ?? 450,
         gap: props.gap! ?? 10
