@@ -13,6 +13,7 @@ export const AppDefTheme = {
         ...LightTheme.colors,
         ...MD3LightTheme.colors,
         primary: "#FF9D00",
+        primaryContainer: "#ff9d00c0",
         onSecondaryContainer: "#000000",
     }
 }
@@ -24,6 +25,7 @@ export const AppDarkTheme = {
         ...DarkTheme.colors,
         ...MD3DarkTheme.colors,
         primary: "#FF9D00",
+        primaryContainer: "#FF9D00c0",
         onSecondaryContainer: "#000000",
     }
 }
