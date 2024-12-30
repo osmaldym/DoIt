@@ -12,6 +12,7 @@ import { DrawerLayoutAndroid } from "react-native";
 import { Header } from "../components/header";
 import { ProfileScreen } from "../screens/profile";
 import { TagScreen } from "../screens/tags";
+import { TaskForm } from "../screens/taskForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,7 +63,7 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                                             name={AppRoutes.home}
                                             component={HomeScreen}
                                             options={{ header: (props) => <Header nativeStackProps={props} strictMenu={true} /> }}
-                                            />
+                                        />
                                         <Stack.Screen 
                                             name={AppRoutes.profile}
                                             component={ProfileScreen}
@@ -70,7 +71,7 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                                                 title: 'Profile',
                                                 header: (props) => <Header nativeStackProps={props} strictMenu={true} />
                                             }}
-                                            />
+                                        />
                                         <Stack.Screen 
                                             name={AppRoutes.tags}
                                             component={TagScreen}
@@ -79,7 +80,14 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                                                 headerTitle: 'Tags',
                                                 header: (props) => <Header nativeStackProps={props} strictMenu={true} />
                                             }}
-                                            />
+                                        />
+                                        <Stack.Screen 
+                                            name={AppRoutes.taskForm}
+                                            component={TaskForm}
+                                            options={{
+                                                header: (props) => <Header nativeStackProps={props} />
+                                            }}
+                                        />
                                     </>
                                 )
                             }
