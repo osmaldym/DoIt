@@ -1,7 +1,7 @@
 import { Button } from "react-native-paper";
 import { PropsWithChildren } from "react";
-import { GestureResponderEvent, TextStyle, ViewStyle } from "react-native";
-import { Theme } from "../theme/colors";
+import { GestureResponderEvent, TextStyle, TouchableHighlight, ViewStyle } from "react-native";
+import { AppDefTheme, Theme } from "../theme/colors";
 
 type ButtonProps = PropsWithChildren<{
     mode?: "text" | "outlined" | "contained" | "elevated" | "contained-tonal",
@@ -9,14 +9,21 @@ type ButtonProps = PropsWithChildren<{
     icon?: string,
     title?: string,
     color?: string,
+    rippleColor?: string,
     buttonColor?: string,
     noBg?: boolean,
+    btnRight?: boolean,
     loading?: boolean,
     disabled?: boolean,
     onPress?: (e: GestureResponderEvent) => void,
     style?: ViewStyle,
     labelStyle?: ViewStyle,
 }>;
+
+const buttonStyle: ViewStyle = {
+    borderRadius: 9999,
+    overflow: "hidden"
+}
 
 export function Btn(props: ButtonProps): React.JSX.Element {
     const labelStyle: TextStyle = {
@@ -30,9 +37,11 @@ export function Btn(props: ButtonProps): React.JSX.Element {
             disabled={props.loading ?? props.disabled}
             mode={props.noBg ? 'text' : (props.mode ?? "contained")}
             icon={props.icon}
+            contentStyle={[{ flexDirection: props.btnRight ? 'row-reverse' : undefined }, buttonStyle]}
             onPress={props.onPress}
-            buttonColor={!props.noBg ? (props.buttonColor ?? Theme.colors.primary) : 'transparent'}
-            style={[props.style]}
+            buttonColor={!props.noBg ? (props.buttonColor ?? AppDefTheme.colors.primary) : 'transparent'}
+            background={{color: props.rippleColor}}
+            style={[props.style, buttonStyle]}
             labelStyle={[props.labelStyle, labelStyle]}
         >
             {props.title ?? "Log in"}
