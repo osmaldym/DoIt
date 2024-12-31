@@ -37,7 +37,7 @@ export function Btn(props: ButtonProps): React.JSX.Element {
             disabled={props.loading ?? props.disabled}
             mode={props.noBg ? 'text' : (props.mode ?? "contained")}
             icon={props.icon}
-            contentStyle={[{ flexDirection: props.btnRight ? 'row-reverse' : undefined }, buttonStyle]}
+            contentStyle={[{ flexDirection: props.btnRight ? 'row-reverse' : 'row' }, buttonStyle]}
             onPress={props.onPress}
             buttonColor={!props.noBg ? (props.buttonColor ?? AppDefTheme.colors.primary) : 'transparent'}
             background={{color: props.rippleColor}}
