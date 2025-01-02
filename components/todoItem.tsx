@@ -1,13 +1,14 @@
 import { PropsWithChildren, useState } from "react";
 import { Column, Row } from "./arrangements";
 import { Txt } from "./text";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { AppDefTheme } from "../theme/colors";
 import { IconButton } from "react-native-paper";
 import { Skeleton } from "./skeleton";
 
 type TodoItemProps = PropsWithChildren<{
     title: string,
+    onFlatList?: boolean,
     content?: string,
     onPressCompleted?: () => unknown,
     onPressEdit?: () => unknown,
@@ -35,10 +36,14 @@ const styles = StyleSheet.create({
 export function TodoItem(props: TodoItemProps): React.JSX.Element {
     const [checked, setChecked] = useState(false);
 
+    // This cause the `overflow: 'visible'` doesn't work in FlatList on android.
+    let remBoxShadow;
+    if (Platform.OS === 'android' && props.onFlatList) remBoxShadow = { boxShadow: '' };
+
     const rippleColor = AppDefTheme.colors.primary + '20' // Opacity in hex
 
     return (
-        <Column style={styles.item}>
+        <Column style={[styles.item, remBoxShadow] as any}>
             <Row style={styles.titleSection}>
                 <Txt size={22}>{props.title}</Txt>
                 <Row gap={0}>
