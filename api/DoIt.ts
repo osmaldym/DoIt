@@ -7,6 +7,11 @@ import { catch_unwind } from "rusting-js";
 export class DoItApi {
     static url: string = Config.URL ?? "";
 
+    static trimData (data: any){
+        const { __v, _id, ...result } = data;
+        return result;
+    }
+
     static async get(endpoint: Api, data?: object): Promise<Success & Error>
     static async get(endpoint: Api, idOrVal?: string): Promise<Success & Error>
     static async get(endpoint: Api, idOrVal?: unknown): Promise<Success & Error> {
@@ -34,14 +39,14 @@ export class DoItApi {
 
     static async patch(endpoint: Api, id: string, data: object): Promise<Success & Error> {
         const urlEndpoint: string = this.url + endpoint + id;
-        const res = await catch_unwind(async () => (await HTTP.patch(urlEndpoint, data)).json());
+        const res = await catch_unwind(async () => (await HTTP.patch(urlEndpoint, this.trimData(data))).json());
         if (res.is_err()) return HTTP.anotherError(res.err());
         return res.unwrap();
     }
 
     static async put(endpoint: Api, data: object, id: string | undefined): Promise<Success & Error> {
         const urlEndpoint: string = this.url + endpoint + (id ?? "");
-        const res = await catch_unwind(async () => (await HTTP.put(urlEndpoint, data)).json());
+        const res = await catch_unwind(async () => (await HTTP.put(urlEndpoint, this.trimData(data))).json());
         if (res.is_err()) return HTTP.anotherError(res.err());
         return res.unwrap();
     }
