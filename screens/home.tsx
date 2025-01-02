@@ -2,13 +2,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Txt } from "../components/text";
 import { Column, Row } from "../components/arrangements";
 import { TodoItem, TodoItemSkeleton } from "../components/todoItem";
-import { FlatList, StyleSheet, ViewStyle } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, ViewStyle } from "react-native";
 import { TaskModel } from "../api/models/task";
 import React, { useEffect, useReducer, useState } from "react";
 import { DoItApi } from "../api/DoIt";
 import Api from "../enums/api.enum";
 import { useErrorReducer } from "../reducers/calls";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import AppRoutes from "../enums/routes.enum";
 import { FAB } from "react-native-paper";
 import { AppDefTheme } from "../theme/colors";
@@ -33,11 +33,15 @@ const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
         bottom: 25,
-        right: 25
+        right: 25,
+        zIndex: 99999,
     },
     col: {
         marginHorizontal: 20,
         flex: 1
+    },
+    flatList: {
+        gap: 10,
     }
 })
 
@@ -55,8 +59,10 @@ export function HomeScreen(): React.JSX.Element {
 
     // All variables and states
     const nav = useNavigation();
+    const isFocused = useIsFocused();
 
     const [loading, setLoading] = useState(true);
+    const [refreshing] = useState(false);
     const [deleteTaskDialog, setDeleteTaskDialog] = useState({} as DeleteTaskDialog);
     const [data, setData] = useState([] as TaskItemModel[]);
 
@@ -97,6 +103,7 @@ export function HomeScreen(): React.JSX.Element {
     }
 
     async function refreshTodayTasks() {
+        setLoading(true);
         setData(await getTodayTasks());
         setLoading(false);
     }
@@ -129,8 +136,8 @@ export function HomeScreen(): React.JSX.Element {
     }
     
     useEffect(() => {
-        refreshTodayTasks();
-    }, []);
+        isFocused && refreshTodayTasks();
+    }, [isFocused]);
 
     const item = ({item}: {item: TaskItemModel}) => (
         <TodoItem 
@@ -139,6 +146,7 @@ export function HomeScreen(): React.JSX.Element {
             onPressEdit={item.onPressEdit}
             onPressCompleted={item.onPressCompleted}
             onPressRemove={item.onPressRemove}
+            onFlatList
         />
     )
 
@@ -164,6 +172,10 @@ export function HomeScreen(): React.JSX.Element {
                         data!.length ?
                         <FlatList 
                             data={data}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={refreshTodayTasks}/>
+                            }
+                            contentContainerStyle={styles.flatList}
                             renderItem={item}
                         /> :
                         <NoData 
