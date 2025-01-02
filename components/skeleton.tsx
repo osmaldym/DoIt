@@ -40,5 +40,5 @@ export function Skeleton(props: SkeletonProps): React.JSX.Element {
         height: props.height ?? 20,
     }
 
-    return <Animated.View style={[props.style, animStyle]} />
+    return <Animated.View style={[animStyle, props.style]} />
 }
