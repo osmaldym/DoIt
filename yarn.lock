@@ -6120,9 +6120,9 @@ run-parallel@^1.1.9:
     queue-microtask "^1.2.2"
 
 rusting-js@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/rusting-js/-/rusting-js-0.1.7.tgz#62dc7e387b7d11d40e67062cbac52d60448fa11d"
-  integrity sha512-9hO1y/iFP41x2deYnYSCLEqf+A9JFxcGB+6SzPmM9QQna6iqoSYPVheF4hW/hicEKvT+mSfKORJPW6X5sDQR6w==
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/rusting-js/-/rusting-js-0.1.8.tgz#b362ba3f590b1c74807da1a8ef453c50d5764b42"
+  integrity sha512-Nlp/Fml9AVJmdAbgKEjwFRbW6iwQS9GCpzkc23BQtmlq5gDURq1qJsNm/QmE9/5ITxpwQt5Cw4jz48ItpKYa9A==
 
 safe-array-concat@^1.1.2:
   version "1.1.2"
