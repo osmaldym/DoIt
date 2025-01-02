@@ -40,6 +40,10 @@ export default class HTTP {
         return this.fetchTimeout(url, { method: 'PATCH', body: JSON.stringify(data), headers: this.getHeaders() }) as Promise<Response>;
     }
 
+    static async put(url: string, data: object): Promise<Response> {
+        return this.fetchTimeout(url, { method: 'PUT', body: JSON.stringify(data), headers: this.getHeaders() }) as Promise<Response>;
+    }
+
     static async delete(url: string): Promise<Response> {
         return this.fetchTimeout(url, { method: 'DELETE', headers: this.getHeaders() }) as Promise<Response>;
     }
