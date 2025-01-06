@@ -9,6 +9,7 @@ import { Skeleton } from "./skeleton";
 type TodoItemProps = PropsWithChildren<{
     title: string,
     onFlatList?: boolean,
+    completed?: boolean,
     content?: string,
     onPressCompleted?: () => unknown,
     onPressEdit?: () => unknown,
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
 })
 
 export function TodoItem(props: TodoItemProps): React.JSX.Element {
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(props.completed ?? false);
 
     // This cause the `overflow: 'visible'` doesn't work in FlatList on android.
     let remBoxShadow;
