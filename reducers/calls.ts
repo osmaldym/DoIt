@@ -8,3 +8,11 @@ export const useErrorReducer = () => useReducer(
     },
     {} as Error
 );
+
+export const useSuccessReducer = () => useReducer(
+    (_state: unknown, action: string | undefined) => {
+        if (action == undefined) return;
+        return action;
+    },
+    ''
+);

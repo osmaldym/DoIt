@@ -2,12 +2,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Txt } from "../components/text";
 import { Column, Row } from "../components/arrangements";
 import { TodoItem, TodoItemSkeleton } from "../components/todoItem";
-import { FlatList, RefreshControl, StyleSheet, ViewStyle } from "react-native";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import { TaskModel } from "../api/models/task";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DoItApi } from "../api/DoIt";
 import Api from "../enums/api.enum";
-import { useErrorReducer } from "../reducers/calls";
+import { useErrorReducer, useSuccessReducer } from "../reducers/calls";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import AppRoutes from "../enums/routes.enum";
 import { FAB } from "react-native-paper";
@@ -67,13 +67,7 @@ export function HomeScreen(): React.JSX.Element {
     const [data, setData] = useState([] as TaskItemModel[]);
 
     const [error, setErrorIfExist] = useErrorReducer();
-    const [success, setSuccessIfExist] = useReducer(
-        (_state: unknown, action: string | undefined) => {
-            if (action == undefined) return;
-            return action;
-        },
-        ''
-    );
+    const [success, setSuccessIfExist] = useSuccessReducer();
 
     const today = new Date().toISOString();
 
