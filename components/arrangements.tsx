@@ -5,7 +5,7 @@ type ArregementProps = PropsWithChildren<{
     gap?: number,
     maxWidth?: number | 'auto',
     noStretch?: boolean,
-    style?: ViewStyle,
+    style?: ViewStyle | object,
 }>
 
 function getProps(props: ArregementProps, direction: FlexStyle["flexDirection"] = 'column'): ViewStyle {
