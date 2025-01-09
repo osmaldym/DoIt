@@ -13,12 +13,13 @@ const txtInputStyle: TextStyle = {
 }
 
 type InputProps = PropsWithChildren<{
-    label?: string
-    inputMode?: InputModeOptions;
-    style?: ViewStyle;
+    label?: string,
+    value?: string,
+    inputMode?: InputModeOptions,
+    style?: ViewStyle,
     inputStyle?: TextStyle,
     inputContStyle?: ViewStyle,
-    onTxtChange?: (text: string) => void;
+    onTxtChange?: (text: string) => void,
     type?: "email" | "password"
 }>;
 
@@ -29,6 +30,7 @@ export function Input(props: InputProps): React.JSX.Element {
 
     return (
         <TextInput
+            value={props.value}
             label={props.label ?? "Email"}
             contentStyle={[AppTxtStyle, txtInputStyle, props.inputStyle]}
             right={props.type! === 'password' ? eyeButton : undefined}
