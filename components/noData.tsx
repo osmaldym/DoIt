@@ -31,7 +31,7 @@ export function NoData(props: NoDataProps): React.JSX.Element {
                 color={props.color ?? AppDefTheme.colors.primary}
                 size={props.size ?? 108}
             />
-            <Txt bold={!props.noBold} size={24}>{props.title}</Txt>
+            <Txt center bold={!props.noBold} size={24}>{props.title}</Txt>
             { 
                 props.description ?
                     <Txt>{props.description}</Txt>

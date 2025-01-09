@@ -179,8 +179,8 @@ export function HomeScreen(): React.JSX.Element {
                             title="No tasks for today."
                         >
                             <Row gap={0} maxWidth="auto" noStretch>
-                                <Txt>Add a new task </Txt>
-                                <Txt bold onPress={()=>nav.navigate(AppRoutes.taskForm as never)}>here</Txt>
+                                <Txt center>Add a new task </Txt>
+                                <Txt center bold onPress={()=>nav.navigate(AppRoutes.taskForm as never)}>here</Txt>
                             </Row>
                         </NoData>
                     )
