@@ -21,6 +21,7 @@ type AppNavProps = PropsWithRef<{
 }>
 
 const opts: NativeStackNavigationOptions = {
+    animation: 'ios_from_right',
     statusBarBackgroundColor: '#000',
     statusBarStyle: 'light',
 }
