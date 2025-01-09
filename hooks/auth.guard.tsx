@@ -8,7 +8,7 @@ import { deleteAccount, login, logout, signin } from "./auth";
 export const AuthContext = createContext({} as AuthContext);
 
 export const useAuthGuard = () => {
-    const defData: GuardData = { userToken: null, loading: false, logout: false };
+    const defData: GuardData = { userToken: null, loading: true, logout: false };
 
     const [state, dispatch] = useReducer(
         (prevState: any, action: Action) => {
