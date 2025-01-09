@@ -6,3 +6,5 @@ export function getErrorMsg(response: Error) {
     else msg = response.message ?? "";
     return msg.charAt(0).toUpperCase() + msg.slice(1);
 }
+
+export const isObjEmpty = (obj: object) => Object.keys(obj).length === 0;
