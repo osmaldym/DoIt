@@ -6,6 +6,7 @@ import { AppTxtStyle } from "../theme/texts";
 type TxtProps = PropsWithChildren<{
     style?: TextStyle,
     bold?: boolean,
+    center?: boolean,
     size?: number,
     onPress?: ((event: GestureResponderEvent) => void),
 }>;
@@ -13,11 +14,12 @@ type TxtProps = PropsWithChildren<{
 export function Txt(props: TxtProps): React.JSX.Element {
     const mergedStyles: Array<TextStyle> = [
         AppTxtStyle,
-        props.style!,
         {
             fontWeight: props.bold ? "bold" : "normal",
+            textAlign: props.center ? 'center' : 'left',
             fontSize: props.size ?? AppTxtStyle.fontSize
-        }
+        },
+        props.style!,
     ]
 
     return (
