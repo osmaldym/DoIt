@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     chip: {
         borderRadius: 999,
-        borderWidth: 2
+        borderColor: AppDefTheme.colors.primary,
     },
     rowGap: {
         gap: 10
@@ -257,8 +257,9 @@ export function TagScreen(): React.JSX.Element {
 
     // Renders for FlatList
 
-    const todoItems = ({item}: {item: TaskItemModel}) => (
+    const todoItems = ({item, index}: {item: TaskItemModel, index: number}) => (
         <TodoItem 
+            key={index}
             title={item.title ?? ""}
             content={item.description ?? ""}
             completed={item.completed}
@@ -269,7 +270,7 @@ export function TagScreen(): React.JSX.Element {
         />
     )
 
-    const tagItems = ({item}: {item: TagModel}) => {
+    const tagItems = ({item, index}: {item: TagModel, index: number}) => {
         const isSelected = tag._id === item._id;
 
         const deleteDialogConfig: DeleteDialog = {
@@ -291,6 +292,7 @@ export function TagScreen(): React.JSX.Element {
 
         return (
             <Chip
+                key={index}
                 selectedColor={AppDefTheme.colors.primary}
                 onLongPress={item.by_user ? () => setTagModal(tagModalConfig) : undefined}
                 selected={isSelected}
@@ -330,6 +332,7 @@ export function TagScreen(): React.JSX.Element {
                                 contentContainerStyle={styles.rowGap}
                                 data={tags}
                                 renderItem={tagItems}
+                                keyExtractor={tag => tag._id!}
                             />
                         )
                     }
@@ -350,6 +353,7 @@ export function TagScreen(): React.JSX.Element {
                                 }
                                 contentContainerStyle={styles.flatList}
                                 renderItem={todoItems}
+                                keyExtractor={task => task._id!}
                             /> :
                             <NoData 
                                 icon="clipboard-text-off-outline"

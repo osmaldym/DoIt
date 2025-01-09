@@ -133,8 +133,9 @@ export function HomeScreen(): React.JSX.Element {
         isFocused && refreshTodayTasks();
     }, [isFocused]);
 
-    const item = ({item}: {item: TaskItemModel}) => (
-        <TodoItem 
+    const item = ({item, index}: {item: TaskItemModel, index: number}) => (
+        <TodoItem
+            key={index}
             title={item.title ?? ""}
             content={item.description ?? ""}
             onPressEdit={item.onPressEdit}
@@ -171,6 +172,7 @@ export function HomeScreen(): React.JSX.Element {
                             }
                             contentContainerStyle={styles.flatList}
                             renderItem={item}
+                            keyExtractor={task => task._id!}
                         /> :
                         <NoData 
                             icon="clipboard-text-off-outline"

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     chip: {
         borderRadius: 999,
-        borderWidth: 2
+        borderColor: AppDefTheme.colors.primary,
     },
     tagSkeleton: {
         marginVertical: 5,
@@ -152,11 +152,12 @@ export function TaskForm({ route }: any): React.JSX.Element {
         } else if (tagsGetted?.length) setTag(tagsGetted[0])
     }, [task, tagsGetted])
 
-    const item = ({item}: {item: TagModel}) => {
+    const item = ({item, index}: {item: TagModel, index: number}) => {
         const isSelected = tag._id === item._id;
 
         return (
             <Chip
+                key={index}
                 selectedColor={AppDefTheme.colors.primary}
                 selected={isSelected}
                 showSelectedCheck={false}
@@ -201,6 +202,7 @@ export function TaskForm({ route }: any): React.JSX.Element {
                                 contentContainerStyle={styles.rowGap}
                                 data={tagsGetted}
                                 renderItem={item}
+                                keyExtractor={tag => tag._id!}
                             />
                         )
                     }
