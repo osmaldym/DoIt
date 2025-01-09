@@ -3,6 +3,6 @@ export class TaskModel {
     title?: string;
     description?: string;
     date?: string;
-    category?: string;
+    categories?: string[];
     completed?: boolean;
 }
