@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
         right: 25,
         zIndex: 99999,
     },
+    title: {
+        textTransform: 'capitalize',
+    },
     col: {
         marginHorizontal: 20,
         flex: 1
@@ -47,8 +50,8 @@ const styles = StyleSheet.create({
 
 function getFormattedToday(): string {
     const today = new Date();
-    const locale = "en-EN"
-    const localeGenerated = today.toLocaleDateString(locale, { weekday: 'long', month: 'short', day: 'numeric'  });
+    const locale = "en"
+    const localeGenerated = today.toLocaleDateString(locale, { weekday: 'long', month: 'short', day: 'numeric' });
     
     // Monday • 1 jan.
     const todayFormated = localeGenerated.replace(',', ' •') + '.'
@@ -156,7 +159,7 @@ export function HomeScreen(): React.JSX.Element {
                 icon='plus'
             />
             <Column style={styles.col} gap={15}>
-                <Txt size={22}>{getFormattedToday()}</Txt>
+                <Txt style={styles.title} size={22}>{getFormattedToday()}</Txt>
                 {
                     loading ?
                     <>
