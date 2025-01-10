@@ -21,8 +21,8 @@ export class DoItApi {
         if (typeof idOrVal == 'object') {
             urlEndpoint += '?'
             for (const [key, val] of Object.entries(idOrVal as any))
-                urlEndpoint += `${key}=${val}&`;
-            urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1);   
+                urlEndpoint += `${key}=${(val as object).toString()}&`;
+            urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1);
         }
 
         const res = await catch_unwind(async () => (await HTTP.get(urlEndpoint)).json());
