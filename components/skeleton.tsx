@@ -1,9 +1,9 @@
 import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
-import { Animated, ViewStyle } from "react-native";
+import { Animated, DimensionValue, ViewStyle } from "react-native";
 
 type SkeletonProps = PropsWithChildren<{
-    width?: number,
-    height?: number,
+    width?: DimensionValue,
+    height?: DimensionValue,
     animated?: boolean,
     borderRadius?: number,
     bgColor?: string,
