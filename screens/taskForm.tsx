@@ -38,9 +38,11 @@ const styles = StyleSheet.create({
     contentInput: {
         textAlignVertical: 'top',
         fontSize: 16,
+        color: AppDefTheme.colors.text
     },
     titleInput: {
         fontSize: 28,
+        color: AppDefTheme.colors.text
     },
     rowGap: {
         gap: 10
@@ -240,6 +242,7 @@ export function TaskForm({ route }: any): React.JSX.Element {
                                     selectionColor={AppDefTheme.colors.primary}
                                     style={styles.titleInput}
                                     defaultValue={task.title}
+                                    placeholderTextColor={AppDefTheme.colors.outline}
                                     onChangeText={(e) => task.title = e}
                                     placeholder="Title"
                                 />
@@ -247,6 +250,7 @@ export function TaskForm({ route }: any): React.JSX.Element {
                                 <TextInput
                                     selectionColor={AppDefTheme.colors.primary}
                                     style={[styles.heightStretch, styles.contentInput]}
+                                    placeholderTextColor={AppDefTheme.colors.outline}
                                     numberOfLines={1}
                                     defaultValue={task.description}
                                     onChangeText={(e) => task.description = e}
