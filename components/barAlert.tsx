@@ -44,7 +44,7 @@ export function BarAlert(props?: BarAlertProps): React.JSX.Element {
             >
             <Row style={{ alignItems: "center" }}>
                 <Icon source={icon} size={24} />
-                <Txt style={{ color: "#000000" }}>{props?.text ?? "Hello World!"}</Txt>
+                <Txt style={{ flex: 1, color: "#000000" }}>{props?.text ?? "Hello World!"}</Txt>
             </Row>
         </Snackbar>
     )
