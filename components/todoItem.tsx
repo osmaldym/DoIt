@@ -42,6 +42,13 @@ const styles = StyleSheet.create({
     }
 })
 
+const stylesSkeleton = StyleSheet.create({
+    titleSection: {
+        ...styles.titleSection,
+        flex: undefined
+    }
+})
+
 export function TodoItem(props: TodoItemProps): React.JSX.Element {
     const [checked, setChecked] = useState(props.completed ?? false);
 
@@ -90,9 +97,9 @@ export function TodoItem(props: TodoItemProps): React.JSX.Element {
 export function TodoItemSkeleton(): React.JSX.Element {
     return (
         <Column style={styles.item}>
-            <Row style={styles.titleSection}>
-                <Skeleton width={200} height={20} />
-                <Row gap={0}>
+            <Row style={stylesSkeleton.titleSection}>
+                <Skeleton width={'60%'} />
+                <Row style={styles.actions} gap={0}>
                     <IconButton
                         disabled
                         icon="check"
@@ -111,6 +118,7 @@ export function TodoItemSkeleton(): React.JSX.Element {
                 </Row>
             </Row>
             <Column>
+                <Skeleton height={14} />
                 <Skeleton height={14} />
                 <Skeleton height={14} />
             </Column>
