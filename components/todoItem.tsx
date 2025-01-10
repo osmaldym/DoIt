@@ -50,8 +50,6 @@ const stylesSkeleton = StyleSheet.create({
 })
 
 export function TodoItem(props: TodoItemProps): React.JSX.Element {
-    const [checked, setChecked] = useState(props.completed ?? false);
-
     // This cause the `overflow: 'visible'` doesn't work in FlatList on android.
     let remBoxShadow;
     if (Platform.OS === 'android' && props.onFlatList) remBoxShadow = { boxShadow: '' };
@@ -64,11 +62,10 @@ export function TodoItem(props: TodoItemProps): React.JSX.Element {
                 <Txt bold style={styles.title} numberOfLines={2} size={20}>{props.title}</Txt>
                 <Row style={styles.actions} gap={0}>
                     <IconButton 
-                        iconColor={checked ? AppDefTheme.colors.primary : "#000000"}
+                        iconColor={props.completed ? AppDefTheme.colors.primary : "#000000"}
                         icon="check"
                         rippleColor={rippleColor}
                         style={styles.iconButton}
-                        onPressIn={() => setChecked(!checked)}
                         onPress={props.onPressCompleted}
                     />
                     <IconButton 
