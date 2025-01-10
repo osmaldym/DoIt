@@ -14,7 +14,7 @@ import { NoData } from "../components/noData";
 import { BarAlert } from "../components/barAlert";
 import { SimpleAlert } from "../components/simpleAlert";
 import { getErrorMsg, isObjEmpty } from "../utils";
-import { Chip, FAB, IconButton } from "react-native-paper";
+import { Chip, FAB, IconButton, TextInput } from "react-native-paper";
 import { AppDefTheme } from "../theme/colors";
 import { Skeleton } from "../components/skeleton";
 import { Modal } from "../components/modal";
@@ -375,9 +375,11 @@ export function TagScreen(): React.JSX.Element {
                 title={tagModalData.current.tag?._id ? "Edit Tag" : "New tag"}
                 onClose={() => setTagModal({ show: false })}>
                 <Column>
-                    <Input
+                    {/* My component here generates a bug showing keyboard, it doesn't show it 😔 */}
+                    <TextInput
                         value={ tagModalData.current.tag?.name }
-                        onTxtChange={txt => setTagModal({ tag: { name: txt }})}
+                        onChangeText={txt => setTagModal({ tag: { name: txt }})}
+                        mode="outlined"
                         label="Category name"
                     />
                     <Btn title="Save" loading={loadings.updatingTag} onPress={tagModal.onPressSave}></Btn>
