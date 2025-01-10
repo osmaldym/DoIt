@@ -28,7 +28,15 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginRight: 0,
     },
+    actions: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    title: {
+        width: '60%'
+    },
     titleSection: {
+        flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center'
     }
@@ -44,10 +52,10 @@ export function TodoItem(props: TodoItemProps): React.JSX.Element {
     const rippleColor = AppDefTheme.colors.primary + '20' // Opacity in hex
 
     return (
-        <Column style={[styles.item, remBoxShadow] as any}>
+        <Column style={[styles.item, remBoxShadow] as any} gap={0}>
             <Row style={styles.titleSection}>
-                <Txt size={22}>{props.title}</Txt>
-                <Row gap={0}>
+                <Txt bold style={styles.title} numberOfLines={2} size={20}>{props.title}</Txt>
+                <Row style={styles.actions} gap={0}>
                     <IconButton 
                         iconColor={checked ? AppDefTheme.colors.primary : "#000000"}
                         icon="check"
@@ -73,7 +81,7 @@ export function TodoItem(props: TodoItemProps): React.JSX.Element {
                 </Row>
             </Row>
             <Column>
-                <Txt>{ props.content }</Txt>
+                { props.content ? <Txt>{ props.content }</Txt> : null }
             </Column>
         </Column>
     );
