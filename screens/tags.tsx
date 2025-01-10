@@ -197,7 +197,6 @@ export function TagScreen(): React.JSX.Element {
         }
 
         const resData = res.data as TaskModel[];
-
         
         for (const data of resData) {
             const idParam: TaskFormRoute = { id: data._id };
@@ -240,7 +239,7 @@ export function TagScreen(): React.JSX.Element {
             return;
         }
 
-        setSuccessIfExist((res.data as TaskModel).completed ? 'Task completed, ¡Congratulations!' : 'Task is now uncompleted');
+        setSuccessIfExist(!(res.data as TaskModel).completed ? 'Task completed, ¡Congratulations!' : 'Task is now uncompleted');
         setLoadings({ updatingTask: false });
         refreshTasks();
     }
@@ -253,7 +252,7 @@ export function TagScreen(): React.JSX.Element {
 
     useEffect(() => {
         refreshTasks();
-    }, [tagsSelected])
+    }, [isFocused, tagsSelected])
 
     // Renders for FlatList
 
@@ -357,7 +356,7 @@ export function TagScreen(): React.JSX.Element {
                             /> :
                             <NoData 
                                 icon="clipboard-text-off-outline"
-                                title="No tasks available with this tag."
+                                title={tagsSelected.length ? `No tasks available with this tag${tagsSelected.length==1 ? 's' : ''}.` : "No tasks found."}
                             >
                                 <Row gap={0} maxWidth="auto" noStretch>
                                     <Txt center>Add a new task </Txt>
