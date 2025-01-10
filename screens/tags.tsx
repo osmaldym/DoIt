@@ -210,7 +210,7 @@ export function TagScreen(): React.JSX.Element {
             todoItems.push({
                 ...data,
                 onPressRemove: () => setDeleteDialog(deleteDialogConfig),
-                onPressCompleted: () => setCompletedTask(data._id!),
+                onPressCompleted: () => setCompletedTask(data),
                 onPressEdit: () => nav.navigate(...[AppRoutes.taskForm, idParam] as never), // Don't judge me 🙏
             })
         } 
@@ -232,15 +232,15 @@ export function TagScreen(): React.JSX.Element {
         refreshTasks();
     }
 
-    const setCompletedTask = async (_id: string) => {
-        const res = await DoItApi.patch(Api.tasks, _id, { completed: true });
+    const setCompletedTask = async (data: TaskModel) => {
+        const res = await DoItApi.patch(Api.tasks, data._id!, { completed: !data.completed });
 
         if (res.error){
             setErrorIfExist(res);
             return;
         }
 
-        setSuccessIfExist('Task completed, ¡Congratulations!');
+        setSuccessIfExist((res.data as TaskModel).completed ? 'Task completed, ¡Congratulations!' : 'Task is now uncompleted');
         setLoadings({ updatingTask: false });
         refreshTasks();
     }
@@ -306,7 +306,7 @@ export function TagScreen(): React.JSX.Element {
             >{item.name}</Chip>
         )
     }
-    
+
     // Render
     return (
         <SafeAreaView style={styles.completeHeight}>
@@ -412,8 +412,9 @@ export function TagScreen(): React.JSX.Element {
             <BarAlert 
                 text={success}
                 type="success"
-                visible={!!success}
-                onDismiss={() => setSuccessIfExist(undefined)}
+                duration={success ? undefined : 0}
+                visible={!!success ?? false}
+                onDismiss={() => setSuccessIfExist('')}
             />
 
             <SimpleAlert
