@@ -14,12 +14,13 @@ import { NoData } from "../components/noData";
 import { BarAlert } from "../components/barAlert";
 import { SimpleAlert } from "../components/simpleAlert";
 import { getErrorMsg, isObjEmpty } from "../utils";
-import { Chip, FAB, IconButton, Portal, TextInput } from "react-native-paper";
+import { Chip, FAB, IconButton } from "react-native-paper";
 import { AppDefTheme } from "../theme/colors";
 import { Skeleton } from "../components/skeleton";
 import { Modal } from "../components/modal";
 import { Btn } from "../components/button";
 import { Input } from "../components/input";
+import { useSelectTagsReducer } from "../reducers/tags";
 
 export type TaskFormRoute = {
     id?: string,
@@ -99,7 +100,7 @@ export function TagScreen(): React.JSX.Element {
     // Dialogs and data to get/set
     const [tasks, setTasks] = useState([] as TaskItemModel[]);
     const [tags, setTags] = useState([] as TagModel[]);
-    const [tag, setTag] = useState({} as TagModel);
+    const [tagsSelected, setTagsSelected] = useSelectTagsReducer();
     const [deleteDialog, setDeleteDialog] = useState({} as DeleteDialog);
     
     // Error and success
@@ -150,8 +151,6 @@ export function TagScreen(): React.JSX.Element {
             return;
         }
 
-        if (tagData?._id == tag._id) setTag(tagData!);
-
         setSuccessIfExist(`The tag was ${ !tagData?._id ? 'created' : 'edited' } successfully`);
         setTagModal({});
         getTags();
@@ -169,7 +168,7 @@ export function TagScreen(): React.JSX.Element {
             return;
         }
 
-        if (tagData?._id == tag._id) setTag({});
+        if (tagData?._id) setTagsSelected({tags: tagData, deselect: true});
 
         setSuccessIfExist('The tag was deleted successfully');
         setDeleteDialog({});
@@ -179,12 +178,15 @@ export function TagScreen(): React.JSX.Element {
 
     // For tasks
 
-    const refreshTasks = async (tag_id?: string) => {
+    const refreshTasks = async () => {
         setLoadings({ getTasks: true });
 
         let res;
+
+        const data = { categories: [] } as TaskModel;
+        for (const tag of tagsSelected) data.categories?.push(tag._id!);
         
-        if (tag_id || tag._id) res = await DoItApi.get(Api.tasksByCategory, tag_id ?? tag._id);
+        if (tagsSelected.length) res = await DoItApi.get(Api.tasksSearch, data);
         else res = await DoItApi.get(Api.tasks);
 
         let todoItems: TaskItemModel[] = [];
@@ -217,11 +219,6 @@ export function TagScreen(): React.JSX.Element {
         setLoadings({ getTasks: false });
     }
 
-    const refreshTagAndTasks = (item: TagModel) => {
-        setTag(item);
-        refreshTasks(item._id);
-    }
-
     const removeTask = async (_id: string) => {
         const res = await DoItApi.delete(Api.tasks, _id);
 
@@ -252,8 +249,11 @@ export function TagScreen(): React.JSX.Element {
 
     useEffect(() => {
         if (!tags.length) getTags();
+    }, [isFocused]);
+
+    useEffect(() => {
         refreshTasks();
-    }, [isFocused, tag]);
+    }, [tagsSelected])
 
     // Renders for FlatList
 
@@ -271,7 +271,7 @@ export function TagScreen(): React.JSX.Element {
     )
 
     const tagItems = ({item, index}: {item: TagModel, index: number}) => {
-        const isSelected = tag._id === item._id;
+        const isSelected = !!tagsSelected.find((tag: TagModel) => tag._id! === item._id!);
 
         const deleteDialogConfig: DeleteDialog = {
             show: true,
@@ -301,8 +301,8 @@ export function TagScreen(): React.JSX.Element {
                 textStyle={{ color: '#000' }}
                 style={styles.chip}
                 mode="outlined"
-                onClose={isSelected ? () => refreshTagAndTasks({}) : undefined}
-                onPress={!isSelected ? () => refreshTagAndTasks(item) : () => {}}
+                onClose={isSelected ? () => setTagsSelected({tags: item, deselect: isSelected}) : undefined}
+                onPress={!isSelected ? () => setTagsSelected({tags: item}) : () => {}}
             >{item.name}</Chip>
         )
     }

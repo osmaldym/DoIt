@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { Txt } from "../components/text";
 import { useNavigation } from "@react-navigation/native";
@@ -11,10 +11,12 @@ import { Btn } from "../components/button";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { AppDefTheme } from "../theme/colors";
 import { TagModel } from "../api/models/tag";
-import { Chip, Icon } from "react-native-paper";
+import { Chip } from "react-native-paper";
 import { Skeleton } from "../components/skeleton";
 import { BarAlert } from "../components/barAlert";
 import { getErrorMsg } from "../utils";
+import { Error } from "../api/models/responses";
+import { useSelectTagsReducer } from "../reducers/tags";
 
 export type TaskFormRoute = {
     id?: string,
@@ -81,8 +83,8 @@ export function TaskForm({ route }: any): React.JSX.Element {
     const [isDatePickerVisible, showDatePicker] = useState(false);
 
     const [tagsGetted, setTagsGetted] = useState([] as TagModel[]);
+    const [tagsSelected, setTagsSelected] = useSelectTagsReducer();
     const [task, setTask] = useState({} as TaskModel);
-    const [tag, setTag] = useState({} as TagModel);
     
     const [error, setErrorIfExist] = useErrorReducer();
     
@@ -125,9 +127,10 @@ export function TaskForm({ route }: any): React.JSX.Element {
     const saveTask = async () => {
         setLoadings({ sendData: true });
 
-        if (tag._id) task.category = tag._id;
+        const data: TaskModel = {...task, categories: []};
+        for (const tag of tagsSelected) data.categories?.push(tag._id!);
 
-        const res = await DoItApi.put(Api.tasks, task, task._id);
+        const res = await DoItApi.put(Api.tasks, data, task._id);
 
         setLoadings({ sendData: false });
         
@@ -146,14 +149,26 @@ export function TaskForm({ route }: any): React.JSX.Element {
     }, [])
 
     useEffect(() => {
-        if (task?.category){
-            const tag = tagsGetted.find(tag => tag._id === task?.category);
-            if (tag) setTag(tag);
-        } else if (tagsGetted?.length) setTag(tagsGetted[0])
+        if (task?.categories?.length){
+            const tags = tagsGetted.filter(tag => task.categories?.find((tTag_Id: string) => tTag_Id === tag._id!));
+            if (tags.length) setTagsSelected({tags: tags});
+        } else if (tagsGetted?.length) setTagsSelected({tags: tagsGetted[0]})
     }, [task, tagsGetted])
 
     const item = ({item, index}: {item: TagModel, index: number}) => {
-        const isSelected = tag._id === item._id;
+        const isSelected = !!tagsSelected.find((tag: TagModel) => tag._id! == item._id!);
+        
+        const newTagSelected = (item: TagModel) => {
+            if (tagsSelected.length >= 5) {
+                setErrorIfExist({
+                    error: 'Quantity of selected tags exceded',
+                    message: 'The maximum of tags to select are 5'
+                } as Error)
+                return;
+            }
+
+            setTagsSelected({tags: item});
+        }
 
         return (
             <Chip
@@ -165,8 +180,8 @@ export function TaskForm({ route }: any): React.JSX.Element {
                 textStyle={{ color: '#000' }}
                 style={styles.chip}
                 mode="outlined"
-                onClose={isSelected ? () => setTag({}) : undefined}
-                onPress={() => setTag(item)}
+                onClose={isSelected ? () => setTagsSelected({tags: item, deselect: true}) : undefined}
+                onPress={() => newTagSelected(item)}
             >{item.name}</Chip>
         )
     }
