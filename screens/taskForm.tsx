@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
 function getFormattedDate(dateStr?: string): string {
     const date = dateStr ? new Date(dateStr) : new Date();
-    const locale = "en-EN"
+    const locale = "en"
 
     // 1 jan.
     const todayFormated = date.toLocaleDateString(locale, { month: 'short', day: 'numeric'  }) + '.';
