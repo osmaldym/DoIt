@@ -154,7 +154,9 @@ export function TaskForm({ route }: any): React.JSX.Element {
         if (task?.categories?.length){
             const tags = tagsGetted.filter(tag => task.categories?.find((tTag_Id: string) => tTag_Id === tag._id!));
             if (tags.length) setTagsSelected({tags: tags});
-        } else if (tagsGetted?.length) setTagsSelected({tags: tagsGetted[0]})
+        } 
+        // Removing setting first tag selected by default
+        // else if (tagsGetted?.length) setTagsSelected({tags: tagsGetted[0]})
     }, [task, tagsGetted])
 
     const item = ({item, index}: {item: TagModel, index: number}) => {
