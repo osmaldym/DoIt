@@ -1,4 +1,4 @@
-import { HttpStatus } from "../../enums/http.enum";
+import { HttpStatus } from '../../enums/http.enum';
 
 export class StatusCode {
     statusCode?: number;
@@ -11,6 +11,6 @@ export class Success implements StatusCode {
 
 export class Error implements StatusCode {
     statusCode?: number = HttpStatus.BAD_REQUEST;
-    error?: string = "Bad request";
-    message?: Array<string> | string = "This is a bad request";
+    error?: string = 'Bad request';
+    message?: Array<string> | string = 'This is a bad request';
 }

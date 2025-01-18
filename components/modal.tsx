@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
-import { Row } from "./arrangements";
-import { StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
-import { Txt } from "./text";
-import { Modal as RNModal } from "react-native";
+import React, { PropsWithChildren } from 'react';
+import { Row } from './arrangements';
+import { StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { Txt } from './text';
+import { Modal as RNModal } from 'react-native';
 
 type ModalProps = PropsWithChildren<{
     visible: boolean,
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
         padding: 15,
         maxHeight: '50%',
         marginTop: 'auto',
-        boxShadow: '0 0 30px #00000030'
-    }
-})
+        boxShadow: '0 0 30px #00000030',
+    },
+});
 
 export function Modal(props: ModalProps): React.JSX.Element {
     return (
@@ -58,7 +58,7 @@ export function Modal(props: ModalProps): React.JSX.Element {
                 <View style={[styles.allHeight, styles.touchable]} />
             </TouchableWithoutFeedback>
             <View style={styles.modal}>
-                <View style={styles.grip}></View>
+                <View style={styles.grip} />
                 <Row>
                     { props.title ? <Txt bold size={32} style={styles.title}>{props.title}</Txt> : null }
                     { props.actions }
@@ -66,5 +66,5 @@ export function Modal(props: ModalProps): React.JSX.Element {
                 {props.children}
             </View>
         </RNModal>
-    )
+    );
 }

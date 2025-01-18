@@ -1,10 +1,10 @@
-import { PropsWithoutRef, useContext } from "react";
-import { Appbar } from "react-native-paper";
-import { MenuContext } from "./menu";
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import React, { PropsWithoutRef, useContext } from 'react';
+import { Appbar } from 'react-native-paper';
+import { MenuContext } from './menu';
+import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
 type HeaderProps = PropsWithoutRef<{
-    nativeStackProps: NativeStackHeaderProps, 
+    nativeStackProps: NativeStackHeaderProps,
     strictMenu?: boolean,
 }>;
 
@@ -18,7 +18,7 @@ export function Header(props: HeaderProps) {
                 ? <Appbar.BackAction onPress={props.nativeStackProps.navigation.goBack} />
                 : (
                     <>
-                        <Appbar.Action 
+                        <Appbar.Action
                             icon="menu"
                             size={28}
                             onPress={() => menu.current?.openDrawer()} />
@@ -27,5 +27,5 @@ export function Header(props: HeaderProps) {
                 )
             }
         </Appbar.Header>
-    )
+    ) ;
 }

@@ -1,8 +1,8 @@
-import { PropsWithRef } from "react";
-import { ViewStyle } from "react-native";
-import { Icon, Snackbar } from "react-native-paper";
-import { Row } from "./arrangements";
-import { Txt } from "./text";
+import React, { PropsWithRef } from 'react';
+import { StyleSheet, ViewStyle } from 'react-native';
+import { Icon, Snackbar } from 'react-native-paper';
+import { Row } from './arrangements';
+import { Txt } from './text';
 
 type BarAlertProps = PropsWithRef<{
     type: 'info' | 'error' | 'success',
@@ -13,7 +13,17 @@ type BarAlertProps = PropsWithRef<{
     style?: ViewStyle,
 }>;
 
-let snackBarStyle: ViewStyle = {}
+let snackBarStyle: ViewStyle = {};
+
+const styles = StyleSheet.create({
+    txt: {
+        flex: 1,
+        color: '#000000',
+    },
+    alignCenter: {
+        alignItems: 'center',
+    },
+});
 
 export function BarAlert(props?: BarAlertProps): React.JSX.Element {
     let icon: string = '';
@@ -32,8 +42,8 @@ export function BarAlert(props?: BarAlertProps): React.JSX.Element {
             icon = 'information-outline';
             color = '#000000';
     }
-    
-    snackBarStyle = { backgroundColor: color }
+
+    snackBarStyle = { backgroundColor: color };
 
     return (
         <Snackbar
@@ -42,10 +52,10 @@ export function BarAlert(props?: BarAlertProps): React.JSX.Element {
             onDismiss={props?.onDismiss ?? (()=>{})}
             style={[snackBarStyle, props?.style]}
             >
-            <Row style={{ alignItems: "center" }}>
+            <Row style={styles.alignCenter}>
                 <Icon source={icon} size={24} />
-                <Txt style={{ flex: 1, color: "#000000" }}>{props?.text ?? "Hello World!"}</Txt>
+                <Txt style={styles.txt}>{props?.text ?? 'Hello World!'}</Txt>
             </Row>
         </Snackbar>
-    )
+    );
 }

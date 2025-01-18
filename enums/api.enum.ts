@@ -5,7 +5,7 @@ enum Api {
     // Tasks
     tasks = base + 'tasks/',
     tasksSearch = tasks + 'search/',
-    
+
     // Categories or tags
     categories = base + 'categories/',
 

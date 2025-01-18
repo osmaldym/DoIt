@@ -1,5 +1,5 @@
-import { useReducer } from "react";
-import { TagModel } from "../api/models/tag";
+import { useReducer } from 'react';
+import { TagModel } from '../api/models/tag';
 
 type tagSelected = {
     tags?: TagModel | TagModel[],
@@ -23,7 +23,7 @@ export const useSelectTagsReducer = () => useReducer(
         const tagAlone = tagSelected.tags as TagModel;
 
         if (!tagAlone._id) return prev;
-        
+
         if (tagSelected.deselect){
             const sTag = tagSelected.tags! as TagModel;
             const filtered = prev.filter((tag: TagModel) => tag._id !== sTag._id!);

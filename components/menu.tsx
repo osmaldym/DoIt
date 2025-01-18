@@ -1,12 +1,12 @@
-import { Dispatch, PropsWithChildren, RefObject, SetStateAction, createContext, useContext, useState } from "react";
-import { DrawerLayoutAndroid, Image, StyleSheet } from "react-native";
-import { Row } from "./arrangements";
-import { Drawer } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import AppRoutes from "../enums/routes.enum";
-import { AuthContext, GuardData, useAuthGuard } from "../hooks/auth.guard";
-import { AppDefTheme } from "../theme/colors";
-import { SimpleAlert } from "./simpleAlert";
+import React, { Dispatch, PropsWithChildren, RefObject, SetStateAction, createContext, useContext, useState } from 'react';
+import { DrawerLayoutAndroid, Image, StyleSheet } from 'react-native';
+import { Row } from './arrangements';
+import { Drawer } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import AppRoutes from '../enums/routes.enum';
+import { AuthContext, GuardData, useAuthGuard } from '../hooks/auth.guard';
+import { AppDefTheme } from '../theme/colors';
+import { SimpleAlert } from './simpleAlert';
 
 // Types
 type MenuItem = {
@@ -22,7 +22,7 @@ type MenuViewProps = PropsWithChildren<{
 }>
 
 // Imports and necessary code to export or use here
-const LOGO = require('../assets/logo.png')
+const LOGO = require('../assets/logo.png');
 const drawerWidth: number = 300;
 
 export const MenuContext = createContext({} as RefObject<DrawerLayoutAndroid>);
@@ -37,20 +37,20 @@ const allItems: Array<MenuItem> = [
         route: AppRoutes.home,
     },
     {
-        label: "Tags",
-        icon: "tag-outline",
-        route: AppRoutes.tags
+        label: 'Tags',
+        icon: 'tag-outline',
+        route: AppRoutes.tags,
     },
     {
-        label: "Profile",
-        icon: "account-circle-outline",
-        route: AppRoutes.profile
+        label: 'Profile',
+        icon: 'account-circle-outline',
+        route: AppRoutes.profile,
     },
     {
         label: 'Logout',
         icon: 'logout',
     },
-]
+];
 
 // Styles
 const styles = StyleSheet.create({
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         marginRight: 0,
         borderRadius: 0,
         backgroundColor: 'transparent',
-        borderWidth: 0
+        borderWidth: 0,
     },
     row: {
         marginVertical: 25,
@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
     logo: {
         width: 200,
         height: 100,
-        resizeMode: "contain",
-    }
-})
+        resizeMode: 'contain',
+    },
+});
 
 // Elements
-const allItemsToRender = () => allItems.map((el, i) => (
+const allItemsToRender = () => allItems.map((el, i): React.JSX.Element => (
     <Drawer.Item
         key={i}
         label={el.label}
@@ -83,15 +83,15 @@ const allItemsToRender = () => allItems.map((el, i) => (
         background={{color: AppDefTheme.colors.primary}}
         style={styles.items}
         />
-)) 
+));
 
 const MenuView = (props: MenuViewProps) => {
     const { logout } = useContext(AuthContext);
 
     const runLogout = () => {
-        props.setShowDialog(false)
-        logout()
-    }
+        props.setShowDialog(false);
+        logout();
+    };
 
     return (
         <>
@@ -99,16 +99,16 @@ const MenuView = (props: MenuViewProps) => {
                 <Image source={LOGO} style={styles.logo}/>
             </Row>
             {props.children}
-            <SimpleAlert 
-                visible={props.showDialog} 
+            <SimpleAlert
+                visible={props.showDialog}
                 onDismiss={() => props.setShowDialog(false)}
                 title="Logout"
                 content="Are you sure?"
                 onPressYes={runLogout}
                 />
         </>
-    )
-}
+    );
+};
 
 export function Menu(props: PropsWithChildren<{}>): React.JSX.Element {
     const [guard] = useAuthGuard();
@@ -124,14 +124,14 @@ export function Menu(props: PropsWithChildren<{}>): React.JSX.Element {
             item.onPress = () => {
                 setTimeout(() => drawerContext.current?.closeDrawer());
                 setShowDialog(true);
-            }
-            continue
+            };
+            continue;
         }
-        
+
         item.onPress = () => {
             setTimeout(() => drawerContext.current?.closeDrawer());
-            nav.navigate(item.route as never ?? AppRoutes.home)
-        }
+            nav.navigate(item.route as never ?? AppRoutes.home);
+        };
     }
 
     return (
@@ -142,5 +142,5 @@ export function Menu(props: PropsWithChildren<{}>): React.JSX.Element {
             drawerWidth={drawerWidth}
             children={props.children}
             />
-    )
+    );
 }

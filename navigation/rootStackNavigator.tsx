@@ -1,18 +1,18 @@
-import { NavigationContainer, Theme } from "@react-navigation/native";
-import { NativeStackNavigationOptions, createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LogInScreen } from "../screens/login";
-import { SignInScreen } from "../screens/signin";
-import { PropsWithRef, useRef } from "react";
-import AppRoutes from "../enums/routes.enum";
-import { AuthContext, GuardData, useAuthGuard } from "../hooks/auth.guard";
-import { HomeScreen } from "../screens/home";
-import { SplashScreen } from "../screens/splash";
-import { Menu, MenuContext } from "../components/menu";
-import { DrawerLayoutAndroid } from "react-native";
-import { Header } from "../components/header";
-import { ProfileScreen } from "../screens/profile";
-import { TagScreen } from "../screens/tags";
-import { TaskForm } from "../screens/taskForm";
+import { NavigationContainer, Theme } from '@react-navigation/native';
+import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LogInScreen } from '../screens/login';
+import { SignInScreen } from '../screens/signin';
+import React, { PropsWithRef, useRef } from 'react';
+import AppRoutes from '../enums/routes.enum';
+import { AuthContext, GuardData, useAuthGuard } from '../hooks/auth.guard';
+import { HomeScreen } from '../screens/home';
+import { SplashScreen } from '../screens/splash';
+import { Menu, MenuContext } from '../components/menu';
+import { DrawerLayoutAndroid } from 'react-native';
+import { Header } from '../components/header';
+import { ProfileScreen } from '../screens/profile';
+import { TagScreen } from '../screens/tags';
+import { TaskForm } from '../screens/taskForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +24,7 @@ const opts: NativeStackNavigationOptions = {
     animation: 'ios_from_right',
     statusBarBackgroundColor: '#000',
     statusBarStyle: 'light',
-}
+};
 
 export function AppNav(props: AppNavProps): React.JSX.Element {
     const [guard, authContext] = useAuthGuard();
@@ -37,14 +37,14 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                         <Stack.Navigator screenOptions={opts}>
                             {
                                 (guard as GuardData).loading ? (
-                                    <Stack.Screen 
-                                        name={AppRoutes.splashScreen} 
+                                    <Stack.Screen
+                                        name={AppRoutes.splashScreen}
                                         component={SplashScreen}
-                                        options={{ headerShown: false, }}
+                                        options={{ headerShown: false }}
                                         />
                                 ) : !(guard as GuardData).userToken ? (
                                     <>
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.logIn}
                                             component={LogInScreen}
                                             options={{
@@ -52,41 +52,41 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                                                 animationTypeForReplace: guard.logout ? 'pop' : 'push',
                                             }}
                                         />
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.signIn}
                                             component={SignInScreen}
-                                            options={{ header: (props) => <Header nativeStackProps={props} /> }}
+                                            options={{ header: (propsHeader) => <Header nativeStackProps={propsHeader} /> }}
                                             />
                                     </>
                                 ) : (
                                     <>
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.home}
                                             component={HomeScreen}
-                                            options={{ header: (props) => <Header nativeStackProps={props} strictMenu={true} /> }}
+                                            options={{ header: (propsHeader) => <Header nativeStackProps={propsHeader} strictMenu={true} /> }}
                                         />
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.profile}
                                             component={ProfileScreen}
-                                            options={{ 
+                                            options={{
                                                 title: 'Profile',
-                                                header: (props) => <Header nativeStackProps={props} strictMenu={true} />
+                                                header: (propsHeader) => <Header nativeStackProps={propsHeader} strictMenu={true} />,
                                             }}
                                         />
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.tags}
                                             component={TagScreen}
-                                            options={{ 
+                                            options={{
                                                 title: 'Tags',
                                                 headerTitle: 'Tags',
-                                                header: (props) => <Header nativeStackProps={props} strictMenu={true} />
+                                                header: (propsHeader) => <Header nativeStackProps={propsHeader} strictMenu={true} />,
                                             }}
                                         />
-                                        <Stack.Screen 
+                                        <Stack.Screen
                                             name={AppRoutes.taskForm}
                                             component={TaskForm}
                                             options={{
-                                                header: (props) => <Header nativeStackProps={props} />
+                                                header: (propsHeader) => <Header nativeStackProps={propsHeader} />,
                                             }}
                                         />
                                     </>
@@ -97,5 +97,5 @@ export function AppNav(props: AppNavProps): React.JSX.Element {
                 </MenuContext.Provider>
             </NavigationContainer>
         </AuthContext.Provider>
-    )
+    ) ;
 }

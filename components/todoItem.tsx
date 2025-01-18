@@ -1,10 +1,10 @@
-import { PropsWithChildren, useState } from "react";
-import { Column, Row } from "./arrangements";
-import { Txt } from "./text";
-import { Platform, StyleSheet } from "react-native";
-import { AppDefTheme } from "../theme/colors";
-import { IconButton } from "react-native-paper";
-import { Skeleton } from "./skeleton";
+import React, { PropsWithChildren } from 'react';
+import { Column, Row } from './arrangements';
+import { Txt } from './text';
+import { Platform, StyleSheet } from 'react-native';
+import { AppDefTheme } from '../theme/colors';
+import { IconButton } from 'react-native-paper';
+import { Skeleton } from './skeleton';
 
 type TodoItemProps = PropsWithChildren<{
     title: string,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         borderColor: AppDefTheme.colors.primary,
         borderWidth: 2,
         borderRadius: 10,
-        boxShadow: '0 0 20 rgba(0,0,0, 0.2)'
+        boxShadow: '0 0 20 rgba(0,0,0, 0.2)',
     },
     iconButton: {
         marginLeft: 0,
@@ -33,50 +33,50 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     title: {
-        width: '60%'
+        width: '60%',
     },
     titleSection: {
         flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'center'
-    }
-})
+        alignItems: 'center',
+    },
+});
 
 const stylesSkeleton = StyleSheet.create({
     titleSection: {
         ...styles.titleSection,
-        flex: undefined
-    }
-})
+        flex: undefined,
+    },
+});
 
 export function TodoItem(props: TodoItemProps): React.JSX.Element {
     // This cause the `overflow: 'visible'` doesn't work in FlatList on android.
     let remBoxShadow;
     if (Platform.OS === 'android' && props.onFlatList) remBoxShadow = { boxShadow: '' };
 
-    const rippleColor = AppDefTheme.colors.primary + '20' // Opacity in hex
+    const rippleColor = AppDefTheme.colors.primary + '20'; // Opacity in hex
 
     return (
         <Column style={[styles.item, remBoxShadow] as any} gap={0}>
             <Row style={styles.titleSection}>
                 <Txt bold style={styles.title} numberOfLines={2} size={20}>{props.title}</Txt>
                 <Row style={styles.actions} gap={0}>
-                    <IconButton 
-                        iconColor={props.completed ? AppDefTheme.colors.primary : "#000000"}
+                    <IconButton
+                        iconColor={props.completed ? AppDefTheme.colors.primary : '#000000'}
                         icon="check"
                         rippleColor={rippleColor}
                         style={styles.iconButton}
                         onPress={props.onPressCompleted}
                     />
-                    <IconButton 
+                    <IconButton
                         iconColor="#000000"
                         icon="pencil"
                         style={styles.iconButton}
                         rippleColor={rippleColor}
                         onPress={props.onPressEdit}
                     />
-                    <IconButton 
-                        iconColor="#000000" 
+                    <IconButton
+                        iconColor="#000000"
                         icon="delete"
                         style={styles.iconButton}
                         rippleColor={rippleColor}
@@ -107,7 +107,7 @@ export function TodoItemSkeleton(): React.JSX.Element {
                         icon="pencil"
                         style={styles.iconButton}
                         />
-                    <IconButton 
+                    <IconButton
                         disabled
                         icon="delete"
                         style={styles.iconButton}

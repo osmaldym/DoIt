@@ -1,16 +1,16 @@
-import { TextInput } from "react-native-paper";
-import { PropsWithChildren, ReactNode, useState } from "react";
-import { InputModeOptions, TextStyle, ViewStyle } from "react-native";
-import { AppTxtStyle } from "../theme/texts";
+import { TextInput } from 'react-native-paper';
+import React, { PropsWithChildren, ReactNode, useState } from 'react';
+import { InputModeOptions, TextStyle, ViewStyle } from 'react-native';
+import { AppTxtStyle } from '../theme/texts';
 
 const inputStyle: ViewStyle = {
     backgroundColor: 'transparent',
-}
+};
 
 const txtInputStyle: TextStyle = {
     color: '#000',
-    borderColor: 'none'
-}
+    borderColor: 'none',
+};
 
 type InputProps = PropsWithChildren<{
     label?: string,
@@ -20,7 +20,7 @@ type InputProps = PropsWithChildren<{
     inputStyle?: TextStyle,
     inputContStyle?: ViewStyle,
     onTxtChange?: (text: string) => void,
-    type?: "email" | "password"
+    type?: 'email' | 'password'
 }>;
 
 export function Input(props: InputProps): React.JSX.Element {
@@ -31,7 +31,7 @@ export function Input(props: InputProps): React.JSX.Element {
     return (
         <TextInput
             value={props.value}
-            label={props.label ?? "Email"}
+            label={props.label ?? 'Email'}
             contentStyle={[AppTxtStyle, txtInputStyle, props.inputStyle]}
             right={props.type! === 'password' ? eyeButton : undefined}
             style={[inputStyle, props.style]}
@@ -40,5 +40,5 @@ export function Input(props: InputProps): React.JSX.Element {
             secureTextEntry={props.type! === 'password' && showPass}
             mode="outlined"
         />
-    );
+    ) ;
 }

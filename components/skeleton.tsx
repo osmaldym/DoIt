@@ -1,5 +1,5 @@
-import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
-import { Animated, DimensionValue, ViewStyle } from "react-native";
+import React, { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import { Animated, DimensionValue, ViewStyle } from 'react-native';
 
 type SkeletonProps = PropsWithChildren<{
     width?: DimensionValue,
@@ -25,20 +25,20 @@ export function Skeleton(props: SkeletonProps): React.JSX.Element {
                     toValue: 0.5,
                     duration: 1000,
                     useNativeDriver: true,
-                })
+                }),
             ])
-        ).start()
-    }, [anim]) 
+        ).start();
+    }, [anim]);
 
-    useEffect(() => startAnim(), [startAnim])
+    useEffect(() => startAnim(), [startAnim]);
 
     const animStyle: ViewStyle = {
         opacity: anim,
         borderRadius: props.borderRadius ?? 25,
-        backgroundColor: props.bgColor ?? "#999999",
+        backgroundColor: props.bgColor ?? '#999999',
         width: props.width ?? 'auto',
         height: props.height ?? 20,
-    }
+    };
 
-    return <Animated.View style={[animStyle, props.style]} />
+    return <Animated.View style={[animStyle, props.style]} /> ;
 }

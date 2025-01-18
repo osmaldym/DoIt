@@ -1,8 +1,8 @@
-import { Dialog, Portal } from "react-native-paper";
-import { Txt } from "./text";
-import { PropsWithChildren } from "react";
-import { Btn } from "./button";
-import { TextStyle } from "react-native";
+import { Dialog, Portal } from 'react-native-paper';
+import { Txt } from './text';
+import React, { PropsWithChildren } from 'react';
+import { Btn } from './button';
+import { TextStyle } from 'react-native';
 
 type AlertProps = PropsWithChildren<{
     visible: boolean,
@@ -15,18 +15,18 @@ type AlertProps = PropsWithChildren<{
 }>;
 
 const titleStyles: TextStyle = {
-    fontWeight: 'bold'
-}
+    fontWeight: 'bold',
+};
 
 const dangerStyles: TextStyle = {
     color: 'red',
-}
+};
 
 export function SimpleAlert(props: AlertProps): React.JSX.Element {
     return (
         <Portal>
             <Dialog visible={props.visible} onDismiss={props.onDismiss}>
-                <Dialog.Title style={[titleStyles, props.type == 'danger' ? dangerStyles : undefined]}>{props.title}</Dialog.Title>
+                <Dialog.Title style={[titleStyles, props.type === 'danger' ? dangerStyles : undefined]}>{props.title}</Dialog.Title>
                 <Dialog.Content>
                     <Txt>{props.content}</Txt>
                 </Dialog.Content>
@@ -37,5 +37,5 @@ export function SimpleAlert(props: AlertProps): React.JSX.Element {
                 </Dialog.Actions>
             </Dialog>
         </Portal>
-    )
+    ) ;
 }
